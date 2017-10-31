@@ -1,0 +1,140 @@
+/*个人资料 start*/
+table {
+    height: 320px;
+    margin: 60px 0 0 210px;
+}
+table tr .portrait{
+    row-span:8;
+    padding-right: 60px;
+    width: 120px;
+}
+table tr td{
+    padding-right: 20px;
+    color: #585858;
+    width: 80px;
+    text-align: right;
+}
+table tr .portrait img{
+    border-radius: 50%;
+    height: 120px;
+    width: 120px;
+    margin-top: -40px;
+}
+table tr th{
+    color: #272727;
+    font-weight: 400;
+}
+.button{
+    margin-top: 10px;
+    margin-left: 45%;
+}
+/*个人资料 end*/
+/*月报 start*/
+.no-border{
+    border: 0;
+    cursor: pointer;
+}
+.alter{
+    height: 60px;
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    background-color: #f3faf8;
+}
+.alter .new{
+    float: left;
+    border-radius: 15px;
+    height: 30px;
+    width: 65px;
+    font-size: 12px;
+    background: #07bfbd;
+    color: #fff;
+    margin:15px 0 0 42px;
+}
+.alter-search{
+    position:relative;
+    width: 260px;
+    float: right;
+    margin:12px 20px 0 0
+}
+.alter-search input{
+    width: 260px;
+    padding-left: 20px;
+    height: 38px;
+    border-radius: 19px;
+    border: 1px solid #e4ebe9;
+}
+.alter-search button{
+    position: absolute;
+    right: 10px;
+    bottom:5px;
+    background: #fff;
+}
+/*月报信息*/
+.monthly-info{
+    padding:0 30px;
+}
+.monthly-info li{
+    border-bottom: 1px dashed #dde6e4;
+    height: 85px;
+    color: #585858;
+    font-size: 12px;
+}
+.monthly-info .mouth{
+    text-align: center;
+    font-size: 16px;
+    height: 53px;
+    line-height: 53px;
+    font-weight: 700;
+}
+.monthly-info li .monthly-info-left{
+    float: left;
+}
+.monthly-info  li .monthly-info-left .monthly-info-left-img{
+    float: left;
+    padding-top: 14px;
+}
+.monthly-info li .monthly-info-left-date{
+    float: left;
+    margin-left: 15px;
+}
+.monthly-info  li .monthly-info-left-date .name{
+    font-size: 16px;
+    height: 38px;
+    line-height: 40px;
+    font-weight: 700;
+}
+.monthly-info  li .monthly-info-left-date  .kind{
+    margin-bottom: 4px;
+}
+.monthly-info  li .monthly-info-left-date  .kind  b{
+    margin-left: 8px;
+    font-weight: 400;
+}
+.monthly-info  li .monthly-info-rigth{
+    float: right;
+}
+.monthly-info  li .monthly-info-rigth p{
+    float: left;
+    line-height: 86px;
+    margin-right: 34px;
+}
+.monthly-info li .monthly-info-rigth .monthly-info-rigth-but{
+    float: left;
+    margin-right: -5px;
+}
+.monthly-info li .monthly-info-rigth .monthly-info-rigth-but button{
+    height: 26px;
+    width: 78px;
+    border-radius: 13px;
+    text-align: center;
+    line-height: 26px;
+    color: #fff;
+    display: block;
+    margin-top:8px;
+    background-color: #e45533;
+}
+.monthly-info li .monthly-info-rigth .monthly-info-rigth-but button:first-child{
+    background-color: #8abc5d;
+    margin-top: 12px;
+}
+/*月报 end*/

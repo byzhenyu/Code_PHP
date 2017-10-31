@@ -1,0 +1,10 @@
+.bottomnav{ width:100%; background: #f5f5f5; border-top:1px solid #e5e5e5;border-bottom:1px solid #e5e5e5; padding-top: 10px;}
+.navinner{height: 175px; padding: 10px 0; background: #f5f5f5; margin: 0 auto; }
+.navinner div{float: left; display: inline; width: 170px; padding-left:60px; }
+.navinner h3  { height:30px; line-height: 30px;}
+
+.navinner h3 em{ font:16px "microsoft yahei"; color:#626262; }
+.navinner ul li{height: 21px; line-height: 21px;}
+.navinner ul li a{ font-size:12px; color:#626262; }
+.footer p{text-align: center; padding: 7px 0; color:#636262;}
+.footer p a{ color:#636262;}

@@ -1,0 +1,118 @@
+<extend name="Public/base" />
+
+<block name="body">
+
+	<div class="tw-layout">
+	<!-- 标题框 -->
+		<div class="tw-list-hd">
+			<?php 
+				if (ACTION_NAME == 'index') echo '管理员';
+				else echo '用户';
+			?>列表
+		</div>
+		<div class="tw-list-top">
+			<div class="tw-tool-bar">
+				<a class="tw-tool-btn-add" href="{:U('edit')}" >
+                    <i class="tw-icon-plus-circle"></i> 添加
+                </a>
+
+	    		<a class="tw-tool-btn-del" onclick="javascript:recycle('chkbId', '确认删除?!删除后用户将放入回收站!')">
+	                <i class="tw-icon-minus-circle"></i> 批量删除
+	            </a>
+			</div>
+			<form action="__ACTION__" method="get" id='frmSearch'>
+				<div class="tw-search-bar">
+					<div class="search-form fr cf">
+			            <div class="sleft">
+			                <select name="role_id" id="role_id">
+	                            <option value="">请选择角色</option>
+	                            <volist name="roleList" id="vo">
+	                                <option value="{$vo.id}">{$vo.name}</option>
+	                            </volist>
+	                        </select>
+	                        <script>
+                        		$('#role_id').val("{$role_id|default=''}");
+                        	</script>
+			            </div>
+                        <div class="sleft">
+			                <select name="post_status" id="post_status">
+	                            <option value="">--请选择岗位状态--</option>
+	                            <option value="1">实习</option>
+	                            <option value="2">在岗</option>
+	                            <option value="3">待岗</option>
+	                            <option value="4">离职</option>
+	                        </select>
+	                        <script>
+                        		$('#post_status').val("{$post_status}");
+                        	</script>
+			            </div>
+			            <div class="sleft">
+			                <input type="text" name="keywords" id="keywords" class="search-input" value="{:I('keywords', '')}" placeholder="真实姓名/登录名/手机号">
+			                <a type="submit" class="sch-btn" onclick="$('#frmSearch').submit();"><i class="btn-search"></i></a>
+			            </div>
+			        </div>
+				</div>
+			</form>
+		</div>
+		<div class="tw-list-wrap">
+            <table class="tw-table tw-table-list tw-table-fixed">
+                <thead>
+                    <tr>
+                        <th width="10" class="row-selected">
+                            <input class="checkbox check-all" type="checkbox">
+                        </th>
+						<th width="50">ID</th>
+						<th width="15%">真实姓名</th>
+						<th width="15%">登录名</th>
+						<th width="15%">手机号</th>
+						<th width="50px">性别</th>
+						<th width="80">岗位状态</th>
+						<th width="50">状态</th>
+						<th width="220">操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <notempty name="list" >
+						<volist name="list" id="v" >
+							<tr>
+								<td><input class="ids row-selected" type="checkbox" name="chkbId" value="{$v.id}"></td>
+								<td>{$v.id} </td>
+								<td class="text-left">{$v.real_name}</td>
+								<td class="text-left">{$v.username}</td>
+								<td class="text-left">{$v.phone}</td>
+								<td>{:show_sex($v['sex'])}</td>
+								<td>{:show_post_status($v['post_status'])}</td>
+								<td>{:show_disabled($v['disabled'])}</td>
+								<td>
+									<if condition="$v['username'] neq 'admin'">
+										{:change_disabled($v['id'], $v['disabled'])}
+									</if>
+									
+									<a class="tw-tool-btn-view" href="{:U('Member/edit?id='.$v['id'])}">
+										<i class="tw-icon-desktop"></i> 修改
+									</a>
+									<if condition="$v['username'] neq 'admin'">
+							         	<a class="tw-tool-btn-del" onclick="javascript:recycle({$v['id']}, '确认删除?! 删除后用户将放入回收站! 用户将无法登录')" >
+							                <i class="tw-icon-minus-circle"></i> 删除
+							            </a>
+						            </if>
+					           </td>
+							</tr>
+						</volist>
+					<else/>
+						<td colspan="9" class="text-center"> aOh! 暂时还没有内容! </td>
+					</notempty>
+        		</tbody>
+            </table>
+			<div class="page">{$page['page']}</div>
+	    </div>
+	</div>
+</block>
+
+<block name="script">
+	<script type="text/javascript">
+		function exportExcel(type){
+			window.location.href='{:U('exportExcel','','')}?type='+type+'&'+$("#frmSearch").serialize();
+		}
+	</script>
+</block>

@@ -1,0 +1,39 @@
+table{
+	margin-left: auto; 
+	margin-right: auto;
+	margin-top: 150px;
+}
+
+tr{
+	line-height: 70px;
+}
+
+
+.key{
+	font-size: 18px;
+	text-align: right;
+
+}
+
+
+.input_text{
+	height: 45px;
+	width: 300px;
+	border: 1px solid #cccccc;
+    border-radius: 5px;
+    font-size: 20px;
+
+}
+
+
+
+.button{
+	margin-top: 150px;
+	margin-left:50%;
+	background-color: green;
+	color: white;
+	font-size: 14px;
+	width: 80px;
+	height:40px;
+	border-radius: 5px;
+}

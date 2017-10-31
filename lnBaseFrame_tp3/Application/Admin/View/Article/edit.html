@@ -1,0 +1,99 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <div class="tw-layout">
+    	<div class="tw-list-hd">
+            {:isset($info['id'])?'编辑':'新增'}文章
+        </div>
+
+	    <div class="tw-list-wrap tw-edit-wrap">
+            <form action="__SELF__" method="post" class="form-horizontal ajaxForm">
+                <div class="form-item">
+                    <label class="item-label">文章标题名称<span class="check-tips"><b>*</b>（输入文章标题）</span></label>
+                    <div class="controls">
+                        <input type="text" class="text input-large" name="name" value="{$info.name}">
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <label class="item-label">文章分类<span class="check-tips"><b>*</b>（选择文章分类）</span></label>
+                    <div class="controls">
+                        <select name="category_id">
+                            <volist name="ArticleCategoryTree" id="vo">
+                                <option value="{$vo.id}"
+                            <if condition="$vo.id eq $info['category_id'] ">
+                                selected="selected"
+                            </if>
+                            >{$vo.title_show}</option>
+                            </volist>
+                    </select>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <label class="item-label">上传标题图片<span class="check-tips">（用于上传标题图片 请上传大于400*400的正方形图片）</span></label>
+                    <div class="controls">
+                        <div>
+                            <img src="{$info.photo_path}" style="height:129px; width:129px;" id="img_"/>
+                        </div>
+                        <input type="hidden" value="{$info.photo_path}" name="photo_path" id="img" />
+                            <input class="btn btn-default btn-xs" type="button" value="上传" id="btnUpload"/>
+                            <input class="btn btn-danger btn-xs" type="button" value="删除" onclick="delFile($('#img').val(), '')" id="btn_delete_" />
+                            <if condition="$info.photo_path eq ''">
+                                <script>
+                                    $("#img_, #btn_delete_").hide();
+                                </script>
+                            </if>
+                    </div>
+                </div>
+
+                <div class="form-item">
+                    <label class="item-label">文章简介<span class="check-tips"><b>*</b>（输入文章简介）</span></label>
+                    <div class="controls">
+                        <textarea name="introduce" rows="5" cols="57">{$info.introduce}</textarea><br/>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">文章内容<span class="check-tips"><b>*</b>（输入文章内容）</span></label>
+                    <div class="controls">
+                        <textarea name="content" id="UE">{$info.content|htmlspecialchars_decode}</textarea><br/>
+                    </div>
+                </div>
+                <div class="form-item">
+                    <label class="item-label">是否显示<span class="check-tips"><b>*</b></span></label>
+                    <div class="controls">
+                        <if condition="$info.display eq 1">
+                            <label class="radio"><input type="radio" value="0" name="display" >是</label>
+                            <label class="radio"><input type="radio" value="1" name="display" checked="checked" >否</label>
+                        <else  />
+                            <label class="radio"><input type="radio" value="0" name="display" checked="checked" >是</label>
+                            <label class="radio"><input type="radio" value="1" name="display" >否</label>
+                        </if>
+                    </div>
+                </div>
+                 <div class="tw-tool-bar-bot">
+                    <button type="submit" class="tw-act-btn-confirm">提交</button>
+                    <button type="button" onclick="goback()" class="tw-act-btn-cancel">返回</button>
+                </div>
+                    <input type="hidden" name="id" value="{$info.id|default=''}"/>
+                </form>
+	    </div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ueditor/ueditor.all.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__COMMON__/js/imgupload.js"></script>
+    <script>
+        UE.getEditor('UE',{
+            autoHeightEnabled: false,
+            initialFrameWidth: '700',
+            initialFrameHeight: 350
+        });
+        $(function(){
+            ajaxUpload('#btnUpload', $("#img"), 'Article', '');
+        })
+    </script>
+</block>

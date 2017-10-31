@@ -1,0 +1,62 @@
+<extend name="Common@Common/base"/>
+<block name="style">
+	<link rel="stylesheet" type="text/css" href="__MEMBER__/css/baseinfo.css">
+</block>
+<block name="data">
+	<table>
+		<tr>
+			<td class="portrait" rowspan="8">
+				<if condition="$info['photo_path'] eq ''">
+					<img src="__PUBLIC__/image/error.jpg"/>
+					<else />
+					<img src="{$info['photo_path']}" />
+				</if>
+				
+			</td>
+			<td>姓名：</td>
+			<th>{$info['real_name']}</th>
+		</tr>
+		<tr>
+			<td>性别：</td>
+			<th>{:show_sex($info['sex'])}</th>
+
+		</tr>
+		<tr>
+			<td>生日：</td>
+			<th>{$info['birthday']|time_format=###,'Y-m-d'}</th>
+		</tr>
+		<tr>
+			<td>职位：</td>
+			<th>{$info['position_name']}</th>
+		</tr>
+		<tr>
+			<td>部门：</td>
+			<th>{$info['department_name']}</th>
+		</tr>
+		
+		<tr>
+			<td>手机号：</td>
+			<th>{$info['phone']}</th>
+		</tr>
+		<tr>
+			<td>管辖地址：</td>
+			<th>{$info['area_name']}</th>
+		</tr>
+	</table>
+	<div>
+		<input class=" button btn" type="button" data-url="{:U('Member/editMember')}" value="修改个人信息">
+	</div>
+</block>
+<block name="script">
+	<script type="text/javascript">
+		$('input[type="button"]').click(function(){
+			var params = {
+					'height': '600px',
+					'width': '800px',
+					'titleBackground': '#32ccca'
+				}
+			var url = $(this).attr('data-url');
+			openLayerPopup(url, '修改个人信息', params);
+		})
+	</script>
+</block>

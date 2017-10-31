@@ -1,0 +1,166 @@
+html,body {
+    font-size: 14px;
+    color: #000;
+    margin: 0 auto;
+    padding: 0;
+}
+
+body{
+    background: url(../images/login_bg.png) no-repeat #f0f4f5;
+    background-position: 80% 100%;
+    min-width: 1200px;
+}
+/* 登陆页样式
+------------------------------------------ */
+a {
+    color: #666;/*改变超链接的颜色*/
+    text-decoration: none;/*清除超链接的下划线*/
+}
+
+a:hover, a:active {
+    color: #0ae;/*超链接--鼠标悬浮改变颜色*/
+    text-decoration: underline;/*鼠标悬浮出现下划线*/
+}
+.main-container{
+    margin: 0 auto;
+    text-align: left;
+    width: 1200px;
+}
+.main-header{
+    color: #fff;
+    width: 100%;
+    height: 160px;
+    background:url(/Public/assets/img/header_bg.png) repeat-x;
+}
+.main-header .welcome{
+    height: 41px;
+    line-height: 41px;
+}
+
+/* 底部 */
+.main-footer {
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    color: #07bfbd;
+    background: #dbeff0;
+    position:fixed;
+    bottom:0;
+    width:100%;
+
+    filter:alpha(opacity=50); /*IE滤镜，透明度50%*/
+    -moz-opacity:0.5; /*Firefox私有，透明度50%*/
+    opacity:0.5;/*其他，透明度50%*/
+}
+
+.login-body {
+    position: absolute;
+    border-radius: 12px;
+    /*margin: 50px auto auto auto;*/
+    width: 600px;
+    box-shadow: 0 8px 0px 0px #d3edee;
+    border: 0px;
+    background-color: #fff;
+}
+.login-header {
+    border-top-left-radius: 12px;
+    border-top-right-radius: 12px;
+    height: 50px;
+    line-height: 50px;
+    background-color: #07bfbd;
+    font-size: 20px;
+    color: #fff;
+    text-align: center;
+}
+
+.login-form{
+    padding: 40px 70px 10px 70px;
+}
+.login-form .item {
+    margin-bottom: 20px;
+    text-align: center;
+}
+.login-form .item span{
+    padding: 0 10px;
+    font-size: 18px;
+    color: #595959;
+}
+
+.login-form .focus {
+    border: 1px solid #A6E1F3;
+    box-shadow: 0 0 12px #BAF7FF;
+}
+
+.login-form input {
+    border-radius: 20px;
+    border: 1px solid #ececec;
+    width: 260px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 16px;
+    vertical-align: middle;
+    background-color: #fff;
+    outline: 0;
+    resize: none;
+    color:#686868;
+    padding: 0 20px;
+}
+
+.login-form .verifycode input {
+    width: 166px;
+    font-size:16px;
+}
+.login-form .verifycode img {
+    vertical-align: middle;
+}
+
+.login-form .login-btn {
+    width: 300px;
+    height: 40px;
+    line-height: 40px;
+    font-size: 20px;
+    text-align: center;
+    vertical-align: middle;
+    cursor: pointer;
+    border: 0;
+    color: #fff;
+    background-color: #07bfbd;
+    border-radius: 20px;
+}
+.login-form .login-btn:hover {
+    color: #fff;
+    background-color: #07bfbd;
+}
+.login-form .login-btn[disabled] {
+    opacity: 0.6;
+    filter: alpha(opacity=60);
+    cursor: default;
+    box-shadow: none;
+}
+.login-form .login-btn .in {
+    display: none;
+}
+.login-form .log-in .in {
+    display: inline-block;
+}
+.login-form .log-in .on {
+    display: none;
+}
+
+
+
+input:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0px 1000px white inset;
+}
+.logo-img {
+    margin: -20px 0 9px 0;;
+    height: 49px;
+    background: url(../images/logo.png) no-repeat 0 center;
+}
+
+
+img.verifyimg{
+	border: 1px solid #ececec;
+	width: 100%;
+    cursor: pointer;
+}

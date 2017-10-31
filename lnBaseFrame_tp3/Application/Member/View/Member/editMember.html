@@ -1,0 +1,134 @@
+<block name="style">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/css/common.css">
+	<link rel="stylesheet" type="text/css" href="__PUBLIC__/toastr/toastr.css">
+	<link rel="stylesheet" type="text/css" href="__MEMBER__/css/edit-member.css">
+	<script type="text/javascript" src="__PUBLIC__/jquery-1.10.2.min.js"></script>
+    <!--[endif]-->
+    <script type="text/javascript" src="__PUBLIC__/jquery-2.0.3.min.js"></script>
+</block>
+<block name="data">
+
+	<form action="__URL__/saveMemberInfo" id="form1" method="POST">
+		<table>
+			<tr>
+				<td class="portrait" rowspan="8">
+
+					<div id="img_info_btn">
+						<div class="_img">
+		                    <if condition="$info['photo_path'] eq ''">
+								<img src="__PUBLIC__/image/error.jpg" id='img_'/>
+								<else />
+								<img src="{$info['photo_path']}"  id='img_'/>
+							</if>
+						</div>
+                        <input type="hidden" value="{$info['photo_path']}" name="photo_path" id="img" />
+
+						<div style="padding-top:20px; width:160px;" >
+	                        <input type="button" class="img_btn" value="更换头像" id="btnUpload"/>
+	                        <if condition="$info['photo_path'] eq ''">
+	                            <script>
+	                                $("#btn_delete_").hide();
+	                            </script>
+	                        </if>
+                        </div>
+	                </div>
+
+				</td>
+				<td>姓名：</td>
+				<th><input type="text" name="real_name" value="{$info['real_name']}"></th>
+			</tr>
+			<tr>
+				<td>性别：</td>
+				<th align="left">
+					<label><input type="radio" name="sex" value="0" {$info['sex']==0?'checked':''}>先生</label>
+
+					<label><input type="radio" name="sex" value="1" {$info['sex']==1?'checked':''} >女士</label>
+
+				</th>
+
+			</tr>
+			<tr>
+				<td>生日：</td>
+				<th><input id="birthday" type="text" class="text input-3x laydate-icon controls" name="birthday" readonly="true"  onclick="laydate({format: 'YYYY-MM-DD', istime:false, festival: true})" value="{$info.birthday|date='Y-m-d',###}" placeholder="请选择出生日期"></th>
+			</tr>
+
+			<tr>
+				<td>职位：</td>
+				<th>
+					<input type="text"  value="{$position_info['name']}" disabled="disabled">
+		  		</th>
+			</tr>
+			<tr>
+				<td>部门：</td>
+				<th>
+					<input type="text"  value="{$department_info['name']}" disabled="disabled">
+		  		</th>
+			</tr>
+
+			<tr>
+				<td>手机号：</td>
+				<th><input type="text"  value="{$info['phone']}" disabled="disabled"></th>
+			</tr>
+
+
+			<tr>
+				<td>管辖地址：</td>
+				<th>
+					<input type="text" value="{$area_info['name']}" disabled="disabled">
+		  		</th>
+			</tr>
+		</table>
+
+		<button type="button" class="button btn">提 交 修 改</button>
+
+	</form>
+</block>
+<block name="script">
+
+<script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/assets/plugins/laydate-v1.1/laydate/laydate.js"></script>
+<script type="text/javascript" charset="utf-8" src="__COMMON__/js/imgupload.js"></script>
+<script type="text/javascript" src="__PUBLIC__/toastr/toastr.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/assets/js/common.js" ></script>
+<script type="text/javascript" src="__PUBLIC__/assets/plugins/layer-v2.0/layer/layer.js"></script>
+	<script type="text/javascript">
+        UPLOAD_IMG_URL = "{:U('uploadImg')}"; // 默认上传图片地址
+        DELETE_FILE_URL = "{:U('delFile')}"; // 默认删除图片执行的地址
+		$(function(){
+            ajaxUpload('#btnUpload', '#img', 'Member', '');
+        });
+
+
+		$(".btn").click(function(){
+			var name = $('input[name="real_name"]').val();
+			if(name==''||name==undefined){
+				toastr.error('姓名不能为空');
+				return false;
+			}
+
+			var url=$("#form1").attr('action');
+			$.ajax({
+				type:"POST",
+				data:$("#form1").serialize(),
+				dataType:'json',
+				url:url,
+				success:function(data){
+					if(data['status']==1){
+						toastr.success(data['info']);
+						$(window.parent.document).find('#mainIframe').contents().find('#sub_nav a span').eq(0).click();
+						setTimeout("parent.layer.closeAll();",3000);
+					}else{
+						toastr.error(data['info']);
+					}
+				}
+			})
+		})
+
+
+
+		$('#go_back').click(function(){
+			$(window.parent.document).find('#mainIframe').contents().find('#sub_nav a span').eq(0).click();
+			layer.closeAll();
+		})
+	</script>
+</block>

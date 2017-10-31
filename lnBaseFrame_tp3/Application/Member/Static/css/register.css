@@ -1,0 +1,113 @@
+
+#logo h1 { border-right: 1px solid #dcdcdc; padding-right:15px; }
+#logo span  { display: inline-block; height: 50px; line-height: 50px;   font-size:20px; padding-left: 15px;}
+ 
+.top_wrapper{  background: url("../images/reg_bg.gif") bottom center repeat-x; width:100%; height:90px; position: relative; }
+.center_wrapper{ background: url("../images/reg_bottom_bg.gif") bottom center repeat-x; width:100%; height: 1%; padding-top:20px; }
+.header{ position: relative;  height: 100%; }
+.header .dologin { float: right;  margin-top: 20px; color: #adadad; font-size:14px;}
+.header .dologin a{ font-size:20px; color:#6c6c6c;}
+.reg-form {
+    width: 400px;
+    margin-left:215px;
+}
+.form-item {
+    border: 1px solid #ddd;
+    height: 52px;
+    position: relative;
+    width: 398px;
+    z-index: 0;
+}
+.form-item label {
+    float: left;
+    height: 52px;
+    line-height: 52px;
+    padding-left: 20px;
+    width: 90px;
+    font-size:14px;
+    color:#666;
+}
+.form-item txt {
+    margin-top: 2px !important;
+}
+.form-item .field {
+    border: 0 none;
+    font-size: 14px;
+    height: 19px;
+    padding-bottom: 11px;
+    padding-left: 20px;
+    padding-top: 16px;
+    width: 190px;
+}
+.form-item .field span {
+    display: none;
+}
+.form-item .form-authcode, .form-item .phonecode {
+    width: 150px;
+}
+.form-item .error {
+    display: block;
+}
+.form-item .i-status {
+    display: none;
+    height: 16px;
+    position: absolute;
+    right: 20px;
+    top: 20px;
+    width: 16px;
+}
+.form-item .img-code {
+    cursor: pointer;
+    height: 46px;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 110px;
+}
+ 
+ .input-tip {
+    color: #f00;
+    font-size: 12px;
+    height: 27px;
+    padding-top: 5px;
+}
+
+.btn-phonecode {
+    background: #f2f2f2 none repeat scroll 0 0;
+    border: medium none;
+    color: #333;
+    height: 46px;
+    padding: 0;
+    position: absolute;
+    right: 3px;
+    top: 3px;
+    width: 110px;
+}
+
+.form-agreen {
+    color: #333;
+    font-size: 12px;
+}
+.form-agreen input {
+    border: 1px solid #cfd1d3;
+    height: 18px;
+    margin: 0 10px 0 0;
+    padding: 0;
+    vertical-align: text-top;
+    width: 18px;
+}
+.form-agreen a {
+    color: #38f;
+}
+
+.btn-register {
+    background: #e22 none repeat scroll 0 0;
+    border: 0 none;
+    color: #fff;
+    font-family: "Microsoft YaHei","Hiragino Sans GB";
+    font-size: 16px;
+    height: 54px;
+    width: 100%;
+    cursor: pointer;
+}
+

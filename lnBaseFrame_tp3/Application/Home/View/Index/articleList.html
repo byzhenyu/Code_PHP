@@ -1,0 +1,37 @@
+<extend name="Common@Common/base"/>
+<block name="style">
+	<style type="text/css">
+		.content-list ul li a{padding: 5px 200px 5px 5px}
+		.content-list ul li span{color: #a9a9a9;}
+	</style>
+</block>
+<block name="data">
+	<div class="content-list">
+		<ul>
+			<foreach name="data" item="v">
+				<li>
+					<div class="content-list-title fl">
+						<if condition="$v['url'] neq ''">
+							<a href="{$v['url']}" title="{$v['name']}">
+						<else />
+							<a href="{:U('Home/Index/articleDetail', array('article_id' => $v['id'], 'current_id' => $current_id, 'main_nav_id' => $main_nav_id))}" title="{$v['name']}">
+						</if>
+						
+							{$v['name']}
+						</a>
+					</div>
+					<div class="content-list-time fr" style="color: #404040;">
+						{$v['add_time']|time_format=###,'Y-m-d'}
+					</div>
+				</li>
+			</foreach>
+		</ul>
+	</div>
+	<div class="page text-center">
+		{$page}
+	</div>
+</block>
+<block name="script">
+	<script type="text/javascript">
+	</script>
+</block>

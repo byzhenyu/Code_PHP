@@ -1,0 +1,46 @@
+<extend name="Common@Common/base"/>
+<block name="style">
+	<style type="text/css">
+		.article{
+			padding: 20px 50px;
+		}
+		.article .article-title{
+			font-size: 16px;
+			font-weight: 900;
+			margin: auto;
+			width: 60%;
+			height: 30px;
+			line-height: 30px;
+			overflow: hidden;
+		}
+		.article .article-click-count{
+			/*color: #ccc;*/
+			padding-right: 10px;
+			line-height: 40px;
+			height: 40px;
+			border-bottom: 1px dashed #ccc;
+		}
+		.article .article-content{
+			margin-top: 20px;
+		}
+		.article .article-content img{
+			width: 100%;
+		}
+	</style>
+</block>
+<block name="data">
+	<div class="article">
+		<div class="article-title text-center" title="{$info['name']}">{$info['name']}</div>
+		<div class="article-click-count text-right">
+			<div style="float: left;line-height: 40px;width: 55%;">{:time_format($info['add_time'])}
+			</div>
+			<div style="float: right;line-height: 40px;width: 45%;">阅读量：{$info['click_count']}
+			</div>
+		</div>
+		<div class="article-content">{$info['content']|htmlspecialchars_decode}</div>
+	</div>
+</block>
+<block name="script">
+	<script type="text/javascript">
+	</script>
+</block>

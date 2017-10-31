@@ -1,0 +1,482 @@
+<extend name="Public/base"/>
+<block name="style">
+	<link rel="stylesheet" type="text/css" href="__CSS__/multiple-select.css" media="all">
+</block>
+
+<block name="body">
+	<div class="tw-layout">
+		<div class="tw-list-hd">
+			{:isset($info['id'])?'编辑':'新增'}用户
+		</div>
+		<form action="{:U()}" method="post" class="ajaxForm">
+			<div class="tw-list-wrap tw-edit-wrap">
+	            <table class="wf-form-table">
+	                <colgroup>
+	                    <col width="15%">
+	                    <col width="35%">
+	                    <col width="15%">
+	                    <col width="35%">
+	                </colgroup>
+	                <tbody>
+                            <tr>
+                                <th colspan="4" class="information"><div class="fl offset">用户信息</div></th>
+                            </tr>
+                            
+                            <tr>
+	                        <th><em>*</em>用户名:</th>
+	                        <td>
+	                            <input type="text" class="text input-5x" name="member[username]" value="{$info['username']}" placeholder="4-20位字母或数字, 首字符必须为字母" id="username"
+		                            <if condition="$info.id gt 0">
+		                            	disabled="disabled" readonly="true"
+		                            </if>
+		                        >
+	                        </td>
+	                        <th><em>*</em>真实姓名:</th>
+	                        <td>
+	                            <input type="text" class="text input-5x" name="member[real_name]" value="{$info['real_name']}" placeholder="用户真实姓名">
+	                        </td>
+	                    </tr> 
+	                    <tr>
+	                        <th><em>*</em>手机号:</th>
+	                        <td>
+	                            <input type="text" class="text input-5x" name="member[phone]" value="{$info['phone']}" maxlength="11" onpaste="this.value=this.value.replace(/[^\d]/g,'')" onkeyup="this.value=this.value.replace(/[^\d]/g,'')" placeholder="11位手机号码, 可用于登录">
+	                        </td>
+	                        <th>电子邮箱:</th>
+	                        <td>
+	                            <input type="text" class="text input-5x" name="member[email]" value="{$info['email']}" placeholder="用户电子邮箱">
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th>
+	                        	<if condition="$info['id'] ELT 0"><em>*</em></if>登录密码:
+	                        </th>
+	                        <td>
+	                            <input type="password" id="password" class="text input-5x" name="member[password]" value=""
+	                            	placeholder = "<if condition='$info.id ELT 0' >用户登录密码, 4位及以上<else />如果不修改, 请留空(4位以上字符)</if>">
+	                        </td>
+	                        <th>
+	                        	<if condition="$info['id'] ELT 0"><em>*</em></if>确认登录密码:
+	                        </th>
+	                        <td>
+	                            <input type="password" id="re_password" class="text input-5x" name="member[re_password]" value="" placeholder="再次输入登录密码">
+	                        </td>
+	                    </tr>
+
+	                    <tr>
+	                        <th>
+	                        	<if condition="$info['id'] ELT 0"><em>*</em></if>验证码密码:
+	                        </th>
+	                        <td>
+	                            <input type="password" id="pay_password" class="text input-5x" name="member[pay_password]" value=""
+	                            	placeholder = "<if condition='$info.id ELT 0' >用户验证码密码, 6位数字<else />如果不修改, 请留空(6位数字)</if>">
+	                        </td>
+	                        <th>
+	                        	<if condition="$info['id'] ELT 0"><em>*</em></if>确认验证码密码:
+	                        </th>
+	                        <td>
+	                            <input type="password" id="re_pay_password" class="text input-5x" name="member[re_pay_password]" value="" placeholder="再次输入验证码密码">
+	                        </td>
+	                    </tr>
+	                    <tr>
+	                        <th><em>*</em>岗位状态:</th>
+	                        <td>
+                                <select name="member[post_status]" id="post_status">
+		                            <option value="">--请选择岗位状态--</option>
+		                            <option value="1">实习</option>
+		                            <option value="2">在岗</option>
+		                            <option value="3">待岗</option>
+		                            <option value="4">离职</option>
+		                        </select>
+		                        <script>
+                            		$('#post_status').val("{$info.post_status|default=''}");
+                            	</script>
+	                        </td>
+	                        <th><em>*</em>权限分组:</th>
+	                        <td>
+								<select name="member_group_id" id="member_group_id">、
+		                            <option value="">--请选择分组--</option>
+		                            <volist name="authGroupList" id="vo">
+		                                <option value="{$vo.id}">{$vo.title}</option>
+		                            </volist>
+		                        </select>
+		                        <script>
+                            		$('#member_group_id').val("{$info.member_group_id|default=''}");
+                            	</script>
+	                        </td>
+	                    </tr>
+	                    <tr>
+                                <th>用户财务编号:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[financial_code]" value="{$info.financial_code}" placeholder="请输入用户财务编号">
+	                        </td>
+                                    <th>用户档案号:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[file_no]" value="{$info.file_no}" placeholder="请输入用户档案号">
+	                        </td>
+	                    </tr>
+
+	                    <tr>
+	                    	<th>用户所属角色:</th>
+	                    	<td colspan="3">
+                                    <select id="role_member" multiple="multiple">
+	                                	<volist name="roleList" id="vo">
+								            <option value="{$vo.id}" >{$vo.name}</option>
+								        </volist>
+							        </select>
+							        <input type="hidden" name="memberRole" id="memberRole"></input>
+	                    	</td>
+	                    </tr>
+	                    <tr>
+                                <th>后台登录权限:</th>
+	                        <td>
+	                        	<label class="wf-form-label-rc">
+	                            	<input type="radio" value="0" name="member[isAdmin]" id="isAdminTure"> 可登录后台
+	                            </label>
+	                            <label class="wf-form-label-rc">
+		                            <input type="radio" value="1" name="member[isAdmin]" id="isAdminFalse" checked="checked"> 不可登录后台
+	                            </label>
+	                            <if condition="$info['isAdmin'] eq 1">
+	                            	<script>
+	                            		$('#isAdminFalse').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                            <if condition="$info['isAdmin'] eq 0">
+	                            	<script>
+	                            		$('#isAdminTure').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                            <if condition="$info['username'] eq 'admin'">
+	                            	<script>
+	                            		$('#isAdminFalse,#isAdminTure').attr('disabled', 'disabled');
+	                            	</script>
+	                            </if>
+	                        </td>
+		        			<th>前台登录权限:</th>
+	                        <td>
+	                        	<label class="wf-form-label-rc">
+	                            	<input type="radio" value="0" name="member[isUser]" id="isUserTure" checked="checked"> 可登录前台
+	                            </label>
+	                            <label class="wf-form-label-rc">
+		                            <input type="radio" value="1" name="member[isUser]" id="isUserFalse" > 不可登录前台
+	                            </label>
+	                            <if condition="$info['isUser'] eq 1">
+	                            	<script>
+	                            		$('#isUserFalse').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                        </td>
+	                     </tr>
+	                    <tr>
+	                    <tr>
+                                    <th>是否启用:</th>
+	                        <td>
+	                        	<label class="wf-form-label-rc">
+	                            	<input type="radio" value="0" name="member[disabled]" checked="checked" id="disabledTrue"> 启用
+	                            </label>
+	                            <label class="wf-form-label-rc">
+		                            <input type="radio" value="1" name="member[disabled]" id="disbledFalse"> 禁用
+	                            </label>
+	                            <if condition="$info['disabled'] eq 1">
+	                            	<script>
+	                            		$('#disbledFalse').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                            <if condition="$info['username'] eq 'admin'">
+		                            <script>
+	                            		$('#disabledTrue,#disbledFalse').attr('disabled', 'disabled');
+	                            	</script>
+	                            </if>
+	                        </td>
+                                    <th>客服人员</th>
+	                        <td>
+                                    <label class="wf-form-label-rc">
+                                    <input type="radio" value="0" name="member[isService]" id="isServiceTrue"> 是
+	                            </label>
+	                            <label class="wf-form-label-rc">
+                                        <input type="radio" value="1" name="member[isService]" checked="checked" id="isServiceFalse"> 否
+	                            </label>
+	                            <if condition="$info['isService'] eq 1">
+	                            	<script>
+	                            		$('#isServiceFalse').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                            <if condition="$info['username'] eq 'admin'">
+		                            <script>
+	                            		$('#isServiceTrue,#isServiceFalse').attr('disabled', 'disabled');
+	                            	</script>
+	                            </if>
+	                        </td>
+	                     </tr>
+	                    <tr>
+                            <th>用户备注:</th>
+	                        <td colspan="3">
+                                <textarea type="text" rows="2" cols="57" name="member[remark]" placeholder="用户的备注, 最长150个字符">{$info['remark']}</textarea>
+	                        </td>
+                        </tr>
+	                    <tr>
+                            <tr>
+                                <th colspan="4" class="information"><div class="fl offset">其他信息</div></th>
+                            </tr>
+	                    <tr>
+                                <th>性别:</th>
+	                        <td>
+		                        <label class="wf-form-label-rc">
+	                            	<input type="radio" value="0" name="member[sex]" checked="checked" id="isMan" > 先生
+	                            </label>
+	                            <label class="wf-form-label-rc">
+		                            <input type="radio" value="1" name="member[sex]" id="isWomen" > 女士
+	                            </label>
+	                            <if condition="$info['sex'] eq 1">
+	                            	<script>
+	                            		$('#isWomen').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                        </td>
+
+                                <th>生日</th>
+                                <td>
+                                    <input type="text" id="birthday" class="text input-3x laydate-icon" name="member[birthday]"  onclick="laydate({format: 'YYYY-MM-DD', istime:false, festival: true})" value="{$info.birthday|time_format=###,'Y-m-d'}" placeholder="请选择生日">
+                                </td>
+                            </tr>   
+                            <tr>
+                                <th>身高:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[height]" value="{$info['height']}" placeholder="请输入用户身高">
+	                        </td>
+                                <th>民族:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[nation]" value="{$info['nation']}" placeholder="请输入用户民族">
+	                        </td>
+	                    </tr>
+                            <tr>
+                                <th>身份证号:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[card_id]" value="{$info['card_id']}" placeholder="请输入用户身份证号">
+	                        </td>
+                                <th>身份证住址:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[card_address]" value="{$info['card_address']}" placeholder="请输入用户身份证住址">
+	                        </td>
+	                    </tr>
+                            <tr>
+                                <th>现家庭住址:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[now_family_address]" value="{$info['now_family_address']}" placeholder="请输入用户现家庭住址">
+	                        </td>
+                                <th>籍贯:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[origin_place]" value="{$info['origin_place']}" placeholder="请输入用户籍贯">
+	                        </td>
+	                    </tr>
+                            <tr>
+                                <th>邮编:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[zipcode]" value="{$info['zipcode']}" placeholder="请输入用户邮编">
+	                        </td>
+                                <th>家庭电话:</th>
+	                        <td>
+                                    <input class="text input-5x" name="member[family_phone]" value="{$info['family_phone']}" placeholder="请输入用户家庭电话">
+	                        </td>
+	                    </tr>
+                            <tr>
+                               <th>政治面貌:</th>
+                               <td colspan="3">
+                                    <label class="wf-form-label-rc">
+                                        <input type="radio" value="0" name="member[political_landscape]" id="political_people" checked="checked"> 群众
+	                            </label>
+	                            <label class="wf-form-label-rc">
+                                        <input type="radio" value="1" name="member[political_landscape]" id="political_member"> 团员
+	                            </label>
+	                            <label class="wf-form-label-rc">
+                                        <input type="radio" value="2" name="member[political_landscape]" id="political_party"> 党员
+	                            </label>
+	                            <if condition="$info['political_landscape'] eq 1">
+	                            	<script>
+                                            $('#political_member').attr('checked', 'checked');
+	                            	</script>
+                                    <elseif condition="$info['political_landscape'] eq 2">
+	                            	<script>
+                                            $('#political_party').attr('checked', 'checked');
+	                            	</script>
+	                            </if>
+	                        </td>
+	                    </tr>
+	                    <tr>
+                                <th>用户头像:</th>
+	                        <td colspan="3">
+                                    <div>
+                                        <img src="{$info.photo_path}" style="height:129px; width:129px;" id="img_"/>
+                                    <div>
+                                    <input type="hidden" value="{$info.photo_path}" name="member[photo_path]" id="img"/>
+                                    <input class="btn btn-default btn-xs" type="button" value="上传" id="btnUpload" />
+                                    <input class="btn btn-danger btn-xs" type="button" value="删除" onclick="delFile($('#img').val(), '')" id="btn_delete_" />
+                                    <if condition="$info.photo_path eq ''">
+                                        <script>
+                                            $("#img_, #btn_delete_").hide();
+                                        </script>
+                                    </if>
+                                    <span class="check-tips">（用户头像, 请上传大于400*400的正方形图片）</span>
+	                        </td>
+	                    </tr>
+                            <tr>
+                                <th>获得的荣誉:</th>
+                                <td colspan="3">
+                                    <textarea type="text" rows="2" cols="57" name="member[honor]" placeholder="用户获得的荣誉, 最长150个字符">{$info['honor']}</textarea>
+	                        </td>
+                            </tr>
+                            <tr>
+                                <th>个人爱好:</th>
+                                <td colspan="3">
+                                    <textarea type="text" rows="2" cols="57" name="member[hobby]" placeholder="用户的个人爱好, 最长150个字符">{$info['hobby']}</textarea>
+	                        </td>
+	                    </tr>
+	                </tbody>
+	            </table>
+	        </div>
+	        <div class="tw-tool-bar-bot">
+                <input type="hidden" name="id" value="{$info['id']}" >
+                <button type="submit" class="tw-act-btn-confirm"  >提交</button>
+                <button type="button" onclick="goback()" class="tw-act-btn-cancel">返回</button>
+            </div>
+        </form>
+	</div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload.js"></script>
+	<script type="text/javascript" charset="utf-8" src="__COMMON__/js/imgupload.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/assets/js/hex_sha1.js"></script>
+    <script type="text/javascript" src="__JS__/multiple-select.js"></script>
+	<script>
+		
+        $(function(){
+            ajaxUpload('#btnUpload', '#img', 'Member', '');
+        })
+    	
+	    $('#role_member').multipleSelect({
+	    	placeholder: "请选择角色",
+	        width: '600px',
+	        onCheckAll: function() {
+                var ids = $("#role_member").multipleSelect("getSelects");
+                $('#memberRole').val(ids);
+            },
+            onUncheckAll: function() {
+                var ids = $("#role_member").multipleSelect("getSelects");
+                $('#memberRole').val(ids);
+            },
+            onOptgroupClick: function(view) {
+                var ids = $("#role_member").multipleSelect("getSelects");
+                $('#memberRole').val(ids);
+            },
+            onClick: function(view) {
+                var ids = $("#role_member").multipleSelect("getSelects");
+                $('#memberRole').val(ids);
+            }
+	    });
+        // 密码验证和加密
+        function validate(){
+        	var password = $('input[name="member[password]"]');
+        	var re_password = $('input[name="member[re_password]"]');
+
+        	var pay_password = $('input[name="member[pay_password]"]');
+        	var re_pay_password = $('input[name="member[re_pay_password]"]');
+
+        	if ($.trim(password.val()) != '' || $.trim(re_password.val()) != '') {
+	        	if (password.val().length < 4 || password.val().length > 20) {
+	                toastr.error('密码长度4-20位');
+	                $('#password').val('');
+			        $('#re_password').val('');
+	                password.focus();
+	                return false;
+	            }
+	            if (password.val() != re_password.val()) {
+	            	toastr.error('两次登录密码不相同');
+	            	$('#password').val('');
+			        $('#re_password').val('');
+	            	password.focus();
+	            	return false;
+	            }
+        	}
+
+        	if ($.trim(pay_password.val()) != '' || $.trim(re_pay_password.val()) != '') {
+        		if (pay_password.val().length != 40) {
+		        	if (pay_password.val().length == 6 ) {
+		        		if ( /^\d+$/.test(pay_password.val()) == false ) {
+		        			toastr.error('验证码密码必须为6位纯数字');
+		        			$('#pay_password').val('');
+			        		$('#re_pay_password').val('');
+		                	pay_password.focus();
+		                	return false;
+		        		}
+		            } else {
+		            	toastr.error('验证码密码必须为6位数字');
+		            	$('#pay_password').val('');
+			        	$('#re_pay_password').val('');
+		                pay_password.focus();
+		                return false;
+		            }
+        		}
+
+	            if (pay_password.val() != re_pay_password.val()) {
+	            	toastr.error('两次验证码密码不相同');
+	            	$('#pay_password').val('');
+			        $('#re_pay_password').val('');
+	            	pay_password.focus();
+	            	return false;
+	            }
+        	}
+
+        	if ($.trim(password.val()) != '' || $.trim(re_password.val()) != '') {
+	            // 对发送出去的代码进行加密,  如果超过40位, 当做已经加密过, 不再加密
+	            if (password.val().length < 40 ) {
+	                password.val( $.trim( hex_sha1( password.val() ) ) );
+	                re_password.val( $.trim( hex_sha1( re_password.val() ) ) );
+	                //console.log(hex_sha1(password.val()));
+	            }
+        	}
+
+        	if ($.trim(pay_password.val()) != '' || $.trim(re_pay_password.val()) != '') {
+	            // 对发送出去的代码进行加密,  如果超过40位, 当做已经加密过, 不再加密
+	            if (pay_password.val().length == 6 ) {
+	                pay_password.val( hex_sha1( $.trim(pay_password.val() ) ) );
+	                re_pay_password.val( hex_sha1( $.trim(re_pay_password.val() ) ) );
+	                //console.log(hex_sha1(password.val()));
+	            }
+        	}
+        }
+        $('.show-img').click(function(){
+            layer.open({
+                type: 1,
+                title: false,
+                closeBtn: 0,
+                skin: 'layui-layer-nobg', //没有背景色
+                shadeClose: true,
+                content:"<img src="+$(this).attr('src')+">"
+            });
+        });
+        function callback(data){
+	        if(data.status == 1){
+	        	_IS_SUBMIT_SUCCESS = true;
+
+	            if (data.info != '' && typeof(data.info) != 'undefined')  toastr.success(data.info);;
+	            //跳转页面
+	            if ( typeof(_TARGET_URL) != 'undefined' && _TARGET_URL != '') {
+	                window.location.href = _TARGET_URL;
+	            }
+	            //刷新页面
+	            if ( typeof(_NEED_REFRESH) != 'undefined' && _NEED_REFRESH == true) {
+	                location.reload();
+	            }
+	        } else {
+	            if (data.info != '' && typeof(data.info) != 'undefined') 
+	            	toastr.error(data.info);
+	            else  
+	            	toastr.error('未定义错误!');
+	        }
+	        $('#password').val('');
+	        $('#re_password').val('');
+	        $('#pay_password').val('');
+	        $('#re_pay_password').val('');
+        }
+    </script>
+</block>

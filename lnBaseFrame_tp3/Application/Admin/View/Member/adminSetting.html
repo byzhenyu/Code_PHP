@@ -1,0 +1,118 @@
+<extend name="Public/base" />
+
+<block name="body">
+	<!-- 标题栏 -->
+	<div class="tab-wrap" style="margin: 10px;" >
+		<ul class="tab-nav nav">
+			<li class="current"><a href="{:U('adminSetting')}">个人信息设置</a></li>
+		</ul>
+		<div class="tab-content">
+			<!-- 修改密码表单 -->
+			<form action="{:U()}" method="post" class="form-horizontal ajaxForm">
+		        <div class="form-item">
+		            <label class="item-label">真实姓名<span class="check-tips"><b>*</b></span></label>
+		            <div class="controls">
+		                <input type="text" class="text input-5x" name="real_name" value="{$info.real_name|default=''}" placeholder="请输入您的真实姓名">
+		            </div>
+		        </div>
+		        <div class="form-item">
+		            <label class="item-label">登录密码<span class="check-tips">(如果不修改请留空)</span></label>
+		            <div class="controls">
+		      			<input type="password" class="text input-4x" name="password" placeholder="4位及以上字符">
+		      			<input type="password" class="text input-4x" name="re_password" placeholder="确认登录密码">
+		            </div>
+		        </div>
+		        <div class="form-item">
+		            <label class="item-label">电子邮箱</label>
+		            <div class="controls">
+		                <input type="text" class="text input-large" name="email" value="{$info.email|default=''}" >
+		            </div>
+		        </div>
+		        <div class="form-item">
+		            <label class="item-label">生日</label>
+		            <div class="controls">
+		                <input class="text input-4x" name="birthday" onclick="laydate()" value="{$info.birthday|date='Y-m-d',###}" >
+		            </div>
+		        </div>
+		        <div class="form-item">
+		            <label class="item-label">性别</label>
+		            <div class="controls">
+		                <label class="wf-form-label-rc">
+                        	<input type="radio" value="0" name="sex" checked="checked" id="isMan" > 先生
+                        </label>
+                        <label class="wf-form-label-rc">
+                            <input type="radio" value="1" name="sex" id="isWomen" > 女士
+                        </label>
+                        <if condition="$info['sex'] eq 1">
+                        	<script>
+                        		$('#isWomen').attr('checked', 'checked');
+                        	</script>
+                        </if>
+		            </div>
+		        </div>
+
+		        <div class="form-item">
+		            <label class="item-label">头像 <span class="check-tips"> <b>*</b> (用户头像, 请上传大于400*400的正方形图片)</span></label>
+		            <div class="controls">
+		                <div>
+							<img src="{$info.photo_path}" style="height:129px; width:129px;" id="img_"/>
+						<div>
+		                <input type="hidden" value="{$info.photo_path}" name="photo_path" id="img"/>
+						<input class="btn btn-default btn-xs" type="button" value="上传" id="btnUpload" />
+						<input class="btn btn-danger btn-xs" type="button" value="删除" onclick="delFile($('#img').val(), '')" id="btn_delete_" />
+						<if condition="$info.photo_path eq ''">
+							<script>
+								$("#img_, #btn_delete_").hide();
+							</script>
+						</if>
+		            </div>
+		        </div>
+		        <div class="form-item">
+		            <label class="item-label">个性签名<span class="check-tips"></span></label>
+		            <div class="controls">
+		      			<textarea name="remark" rows="5" cols="57">{$info.remark|default=''}</textarea> 
+		            </div>
+		        </div>
+
+	            <div class="tw-tool-bar-bot">
+	                <button type="submit" class="tw-act-btn-confirm">提交</button>
+	            </div>
+		    </form>
+		</div>
+	</div>
+</block>
+
+<block name="script">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__COMMON__/js/imgupload.js"></script>
+    <script type="text/javascript" src="__PUBLIC__/assets/js/hex_sha1.js"></script>
+	<script>
+		$(function(){
+			ajaxUpload('#btnUpload', '#img', 'Member', '');
+        })
+
+		function validate(){
+        	var password = $('input[name="password"]');
+        	var re_password = $('input[name="re_password"]');
+
+        	if ($.trim(password.val()) != '' || $.trim(re_password.val()) != '') {
+	        	if (password.val().length < 4 || password.val().length > 40) {
+	                toastr.error('密码长度4-20位');
+	                password.focus();
+	                return false;
+	            }
+	            if (password.val() != re_password.val()) {
+	            	toastr.error('两次登录密码不相同');
+	            	password.focus();
+	            	return false;
+	            }
+	            // 对发送出去的代码进行加密,  如果超过40位, 当做已经加密过, 不再加密
+	            if (password.val().length < 40 ) {
+	                password.val( $.trim( hex_sha1( password.val() ) ) );
+	                re_password.val( $.trim( hex_sha1( re_password.val() ) ) );
+	                //console.log(hex_sha1(password.val()));
+	            }
+	        }
+	    }
+	</script>
+</block>

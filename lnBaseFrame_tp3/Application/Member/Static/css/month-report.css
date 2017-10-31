@@ -1,0 +1,48 @@
+table{
+	margin-top: 20px;
+    margin-left: auto;
+    margin-right: auto;
+    width: 100%;
+}
+tr{
+	height: 50px;
+	width: auto;
+}
+.ar{
+    text-align: right;
+}
+.al{
+    text-align: left;
+}
+
+
+td {
+  font-size: 12px;
+  padding-top: 10px;
+  padding-left: 10px;
+}
+
+input{
+	padding-left: 1rem;
+	height: 30px;
+	width:300px;
+
+}
+
+textarea{
+	padding-left: 1rem;
+	height: 140px;
+	width: 300px;
+}
+
+select{
+	width: 315px;
+	height: 30px;
+}
+option{
+	width: 300px;
+}
+.button{
+	margin-left: 45%;
+	margin-top: 20px;
+}

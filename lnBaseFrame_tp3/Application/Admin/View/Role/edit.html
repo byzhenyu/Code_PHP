@@ -1,0 +1,64 @@
+<extend name="Public/base"/>
+<block name="body">
+    <div id="wrapper">
+
+        <div class="tw-layout">
+            <div class="tw-list-hd">
+                {:isset($info['id'])?'编辑':'新增'}角色
+            </div>
+            <div class="tw-list-wrap tw-edit-wrap">
+
+                <form action="{:U()}" method="post" class="form-horizontal ajaxForm">
+
+                    <div class="form-item">
+                        <label for="name" class="item-label">角色名称<span class="check-tips"><b>*</b>(用于显示角色名称)</span></label>
+                        <div class="controls">
+                            <input type="text" name="name" class="text input-large" id="name"
+                                   placeholder="必须填写" value="{$info.name|default=''}">
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="simple_name" class="item-label">启用状态</label>
+                        <div class="controls">
+                            <label class="radio"><input type="radio" name="status" value="0" {$info['status']==0?'checked':''}>启用</label>
+                            <label class="radio"><input type="radio" name="status" value="1" {$info['status']==1?'checked':''}>禁用</label>
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label class="item-label">排序</label>
+                        <div class="controls">
+                            <input type="text" class="text input-small" name="sort" value="{$info.sort|default=0}">
+                        </div>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="remark" class="item-label">角色描述<span class="check-tips">(用于显示角色描述)</span></label>
+                    <div class="controls">
+<textarea name="remark" rows="5" cols="57">{$info.remark|default=''}</textarea> 
+                    </div>
+                    <div class="tw-tool-bar-bot">
+                        <input type="hidden" name="id" value="{$info.id}">
+                        <button type="submit" class="tw-act-btn-confirm">提交</button>
+                        <button type="button" onclick="goback();" class="tw-act-btn-cancel">返回</button>
+                    </div>
+                </form>
+
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- /#page-wrapper -->
+
+    </div>
+</block>
+<block name="script">
+    <script type="text/javascript">
+
+    </script>
+</block>

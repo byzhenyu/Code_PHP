@@ -1,0 +1,45 @@
+<extend name="Public/base"/>
+
+<block name="body">
+  <div class="tw-layout">
+    <div class="tw-list-hd">
+      导入用户数据
+    </div>
+    <div class="tw-list-wrap tw-edit-wrap">
+      <form action="{:U()}" method="post" class="form-horizontal ajaxForm">
+            <div class="form-item">
+                <label class="item-label">上传Excel<span class="check-tips">（附件格式：xls、xlsx）</span></label>
+                <div class="controls">
+                  <div>
+              <div style="height:20px; width:100px;" id="img1_div"/><a href="" id="img1_" download=""></a></div>
+            </div>
+            <input type="hidden" value="" name="attach_path" id="enclosure" />
+            <input class="btn btn-default btn-xs" type="button" value="上传" id="btnUpload1"/>
+            <input class="btn btn-danger btn-xs" type="button" value="删除" onclick="delFileField($('#enclosure').val(), '')" id="btn_delete1_" />
+              <script>
+                $("#img1_div, #btn_delete1_").hide();
+              </script>
+            </div>
+            <div class="tw-tool-bar-bot">
+                <button type="submit" class="tw-act-btn-confirm">提交</button>
+                <input class="btn btn-primary radius" type="button" onclick="download()" value="&nbsp;&nbsp;下载模板文件&nbsp;&nbsp;">
+            </div>
+        </form>
+    </div>
+  </div>
+
+</block>
+
+<block name="script">
+    <script type="text/javascript" charset="utf-8" src="__PUBLIC__/ajaxupload.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__COMMON__/js/imgupload.js"></script>
+    <script type="text/javascript" charset="utf-8" src="__JS__/admin.js"></script>
+    <script>
+        $(function(){
+          ajaxUploadField('#btnUpload1', $("#enclosure"), 'Excel', '');
+        })
+        function download(){
+          window.location.href="/Uploads/demo/member.xls";
+        }
+    </script>
+</block>

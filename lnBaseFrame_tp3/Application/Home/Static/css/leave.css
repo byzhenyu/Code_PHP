@@ -1,0 +1,73 @@
+.leave-ul{
+	margin-top: 12px;
+	margin-bottom: 30px;
+}
+.leave-li-date{
+	height: 80px;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+}
+.leave-div-date{
+	padding: 15px 0px 0px 30px;
+	width: 169px;
+	height: 65px;
+}
+.leave-top-span{
+	margin-left: 25px;
+}
+.leave-bottom-span{
+	margin-left: 56px;
+	margin-top: 6px;
+	font-size: 12px;
+}
+.leave-li-time{
+	height: 50px;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	margin: 5px 0px;
+}
+.leave-li-content{
+	height: 200px;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+}
+.leave-btn{
+	width: 100px;
+	background-color: #07bfbd;
+    border: 1px solid #07bfbd;
+    border-radius: 18px;
+    color: #fff;
+    cursor: pointer;
+    display: inline-block;
+    height: 36px;
+    text-align: center;
+    margin: 0 150px;
+}
+.divider{
+	background-color: #e5e5e5;
+    height: 70px;
+    width: 1px;
+    margin:5px 0px;
+    overflow: hidden;
+}
+.leave-time-left{
+	line-height: 50px;
+    padding-left: 20px;
+}
+.leave-time-right{
+	line-height: 50px;
+    padding-right: 20px;
+}
+.leave-content{
+	width: 350px;
+	height: 100%;
+	border-top: 1px solid #e5e5e5;
+	border-bottom: 1px solid #e5e5e5;
+	padding: 10px 25px;
+}
+.text-color{
+	color: #848585;
+}
+.text-size{
+	font-size: 16px;
+}

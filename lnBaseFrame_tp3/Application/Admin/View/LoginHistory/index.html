@@ -1,0 +1,78 @@
+<extend name="Public/base"/>
+
+<block name="body">
+
+<div class="tw-layout">
+		<div class="tw-list-hd">
+			 登录历史记录
+		</div>
+		
+	    <div class="tw-list-top">
+			<div class="tw-tool-bar">
+	    		<a class="tw-tool-btn-add" href="javascript:void(0)" onclick="exportExcel({$type})">
+                    <i class="tw-icon-paper-plane"></i> 导出
+                </a>
+	        </div>
+	        <form action="__ACTION__" method="get" id='frmSearch'>
+				<div class="tw-search-bar">
+					<div class="search-form fr cf">
+			            <div class="sleft">
+			                <input type="text" name="name" id="name" class="search-input" value="{:I('name', '')}" placeholder="用户真实姓名/登录名/手机号">
+			                <a type="submit" class="sch-btn" onclick="$('#frmSearch').submit();"><i class="btn-search"></i></a>
+			            </div>
+			        </div>
+				</div>
+			</form>
+	    </div>
+		
+		<div class="tw-list-wrap">
+		    <table class="tw-table tw-table-list tw-table-fixed">
+                <thead>
+                    <tr>
+                        <th class="row-selected">
+                            <input class="checkbox check-all" type="checkbox">
+                        </th>
+                        <th width="50">ID</th>
+                        <th width="">登录用户名</th>   
+                        <th width="">登录时间</th> 
+                        <th width="">登录IP</th>  
+                        <th width="">登录状态</th>   
+                        <th width="">登录备注</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                	<notempty name="list">
+						<volist name = "list" id="v">
+		           
+		                    <tr>
+		                        <td><input class="ids row-selected" type="checkbox" name="chkbId" value="{$v.id}"></td>
+		                        <td>{$v.id}</td>
+		                        <td>{$v.failure_name}</td>
+		                        <td>{:time_format($v['login_time'])}</td>
+		                        <td>{$v.login_ip}</td>
+		                        <td>
+		                        	<if condition="$v['status'] eq 0"> 成功</if>
+		                        	<if condition="$v['status'] eq 1"> 失败</if>
+		                        </td>
+		                        <td>{$v.remark}</td>
+		                    </tr>
+		                   
+		                </volist>
+					<else/>
+						<td colspan="7" class="text-center"> aOh! 暂时还没有内容! </td>
+					</notempty>
+				</tbody>
+			</table>
+			<div class="page">{$page}</div>
+		</div>
+    </div>
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+		function exportExcel(type){
+			window.location.href='{:U('exportExcel','','')}/type/'+type+'/name/'+$('#name').val();
+		}
+	</script>
+</block>

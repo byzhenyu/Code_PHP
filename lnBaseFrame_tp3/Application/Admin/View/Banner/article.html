@@ -1,0 +1,67 @@
+<extend name="Public/base"/>
+
+<block name="body">
+    <!-- S=头部设置 -->
+    <div class="tw-layout">        
+        <!-- S=文章管理 -->
+        <div class="tw-list-hd">手机轮播图管理</div> 
+        <!-- E=文章管理 -->        
+        <!-- S=导航设置 -->
+        <div class="tw-list-top">
+            <!-- S=添加删除 -->
+            <div class="tw-tool-bar">
+            </div>
+            <form action="{:U('Admin/ArticleCategory/selectArticle')}" method="get" id='frmSearch'>
+                <div class="tw-search-bar">
+                    <div class="search-form fr cf">
+                        <div class="sleft">
+                            <input type="text" name="keywords" class="search-input" value="{$keywords}" placeholder="搜索关键字">
+                            <input type="hidden" name="id" value="{$id}">
+                            <a type="submit" class="sch-btn" onclick="$('#frmSearch').submit();"><i class="btn-search"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <!-- E=添加删除 -->
+        </div>
+        <!-- E=导航设置 -->
+    </div>
+    <!-- E=头部设置 -->
+    <!-- S=详情显示 -->	
+    <div class="tw-list-wrap">
+        <div class="category-list">
+            <ul>
+                <foreach name="categoryList" item="v">
+                    <a href="{:U('Admin/ArticleCategory/selectArticle', array('id' => $v['id'], 'keywords' => $keywords))}"><li <if condition="$v.id eq $id"> class="cate-first" </if> >{$v.name}</li></a>
+                </foreach>
+            </ul>
+        </div>
+        <div class="article-list">
+            <ul>
+                <if condition="$articleList eq ''">
+                    <li> aOh! 暂时还没有内容! </li>
+                </if>
+                <foreach name="articleList" item="a">
+                    <li onclick="lastSelectArticle({$a['id']}, this)"><input name="article_id" type="radio" value="{$a.id}"><span> {$a.name}</span> <div class="article-time">{$a.add_time|time_format}</div> </li>
+                </foreach>
+            </ul>
+        </div>
+        <div class="page">
+            {$page}
+        </div>
+    </div>
+    <!-- E=详情显示 -->	
+</block>
+
+<block name="script">
+    <script type="text/javascript">
+        function lastSelectArticle(id, obj){
+            $(obj).find('input[name="article_id"]').attr("checked",true);
+            var article_name = $('input[name="article_id"]:checked').next("span").text();
+            parent.$('#article_name').attr('value',article_name);
+            parent.$('#article_id').val(id);
+            var index = parent.layer.getFrameIndex(window.name);
+            parent.layer.close(index);
+        }
+    </script>
+</block>

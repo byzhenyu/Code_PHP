@@ -1,0 +1,112 @@
+/*右侧悬浮窗 start*/
+.sidebar{
+    width: 150px;
+    border-radius: 12px;
+    background: #c83e1e;
+    overflow: hidden;
+    position: fixed;
+    top:60px;
+    right: 0;
+    z-index: 9;
+}
+.sidebar a{
+    display: block;
+    width: 121px;
+    margin: 0 auto;
+    height: 38px;
+    font-size: 14px;
+    padding-left: 15px;
+    line-height: 38px;
+    color: #fff;
+    border-bottom: 1px dashed #e45533;
+}
+.sidebar a:first-child{
+    text-align: center;
+    background: #e45533;
+    width: 150px;
+    padding-left: 0;
+}
+/*右侧悬浮窗 end*/
+/*审批管理 start*/
+.no-border{
+    border: 0;
+    cursor: pointer;
+}
+.alter{
+    height: 60px;
+    width: 100%;
+    border-radius: 6px 6px 0 0;
+    background-color: #f3faf8;
+}
+.alter .new{
+    float: left;
+    border-radius: 20px;
+    height: 40px;
+    width: 150px;
+    font-size: 14px;
+    font-weight: 700;
+    background: #e45533;
+    color: #fff;
+    margin:10px 0 0 26px;
+}
+.alter-search{
+    position:relative;
+    width: 260px;
+    float: right;
+    margin:12px 20px 0 0
+}
+.alter-search input{
+    width: 260px;
+    padding-left: 20px;
+    height: 38px;
+    border-radius: 19px;
+    border: 1px solid #e4ebe9;
+}
+.alter-search button{
+    position: absolute;
+    right: 10px;
+    bottom:5px;
+    background: #fff;
+}
+.approve-list{
+    padding: 0 30px;
+}
+.approve-list .approve-request{
+    border-bottom: 1px dashed #dde6e4;
+    height: 85px;
+}
+.approve-list .approve-request .requset-info{
+    float: left;
+    margin-left: 16px;
+}
+.approve-list .approve-request .requset-info p{
+    font-size: 12px;
+    line-height: 18px;
+}
+.approve-list .approve-request .requset-info .requester{
+    font-size: 14px;
+    font-weight: 700;
+    margin: 17px 0 4px 0;
+}
+.approve-list .approve-request .requset-info .thing-color{
+    color: #e45533;
+}
+.approve-list .approve-request .result{
+    float: right;
+    line-height: 82px;
+    height: 80px;
+    margin-right: 24px;
+}
+.approve-list .approve-request .result span{
+    color: #ff0000;
+    vertical-align: 4px;
+    padding-right: 2px;
+}
+.approve-list .approve-request .result .reject{
+   margin-top: 24px;
+}
+.approve-list .approve-request .load{
+    color: #8abc5d;
+    padding-right: 15px;
+}
+/*审批管理 end*/

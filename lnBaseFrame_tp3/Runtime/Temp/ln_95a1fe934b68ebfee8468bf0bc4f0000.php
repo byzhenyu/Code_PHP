@@ -1,0 +1,3 @@
+<?php
+//000000000000a:11:{s:14:"WEB_SITE_TITLE";s:18:"六牛基础框架";s:16:"CONFIG_TYPE_LIST";a:5:{i:0;s:6:"数字";i:1;s:6:"字符";i:2;s:6:"文本";i:3;s:6:"数组";i:4;s:6:"枚举";}s:12:"WEB_SITE_ICP";s:22:"鲁ICP备09071209号-2";s:11:"COLOR_STYLE";s:13:"default_color";s:17:"CONFIG_GROUP_LIST";a:3:{i:1;s:6:"基本";i:2;s:12:"美联短信";i:4;s:6:"系统";}s:18:"USER_ADMINISTRATOR";s:1:"1";s:9:"PAGE_SIZE";s:2:"10";s:12:"SMS_USERNAME";s:3:"xxx";s:12:"SMS_PASSWORD";s:4:"xxxx";s:10:"SMS_APIKEY";s:6:"xxxxxx";s:8:"SMS_SIGN";s:4:"xxxx";}
+?>
