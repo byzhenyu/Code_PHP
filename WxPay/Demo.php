@@ -1,5 +1,4 @@
 <?php
-
 /**
  * 微信插件Demo
  * @author Jack_YanTC <627495692@qq.com>
