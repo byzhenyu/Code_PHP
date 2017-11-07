@@ -1,3 +1,5 @@
+//function 添加
+
 /**
  * 极光推送通用消息 - 新版
  * @param string $alert 提示标题
