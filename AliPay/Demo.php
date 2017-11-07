@@ -129,7 +129,7 @@ class Demo {
         die;
     }
 
-    //提现转账 示例
+    //提现转账 示例 
     public function withdraw() {
         $data['out_biz_no']='201705201314';//订单号
         $data['payee_account'] ='627495692@qq.com';//收款支付宝账号
