@@ -5,17 +5,14 @@
 
 AddOSS 阿里云OSS使用方法
 =================
-#
-上传者杜登峰
-#
-第一步
-#
+上传者杜登峰  
+第一步  
 申请key和secret 创建Bucket需要注意的是要把读写权限改为： 公共读
-#
+  
 第二步
-#
+  
 /Application/Common/Conf/config.php 里添加以下配置
-#
+  
 
 	'ALIOSS_CONFIG'    => array(
     'KEY_ID'          => '', // 阿里云oss key_id
@@ -30,7 +27,7 @@ AddOSS 阿里云OSS使用方法
     '/Upload/image/webuploader',
     '/Upload/video',
     ),
-#
+  
 第三步
-#
+  
 Alioss文件夹拷贝到/ThinkPHP/Library/Vendor/Alioss
