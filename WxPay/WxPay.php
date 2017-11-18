@@ -107,6 +107,9 @@ class WxPay {
      */
     public function WxPayNotifyCheck() {
         $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
+		if(!$postStr){
+            $postStr = file_get_contents("php://input");
+        }
         $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
         if ($postObj === false) {
             error_log('parse xml error', 3, './wechat_errorlog.txt');
