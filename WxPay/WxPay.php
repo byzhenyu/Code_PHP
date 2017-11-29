@@ -16,7 +16,7 @@ class WxPay {
      * @param $options ['appsecret'] 公众帐号secert（仅JSAPI支付的时候需要配置)，
      * @param $options ['notify_url'] 支付宝回调地址
      */
-    public function __construct($options) {
+    public function __construct($options = null) {
         $this->config = isset ($options) ? $options : C('WxPay');
     }
 
