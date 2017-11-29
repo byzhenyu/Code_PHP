@@ -25,7 +25,7 @@ class AliPay {
      * @param $options ['notifyUrl'] 支付宝回调地址
      * @param $options ['returnUrl'] 用于web支付返回地址
      */
-    public function __construct($options) {
+    public function __construct($options = null) {
         $this->appId = isset ($options ['appId']) ? $options ['appId'] : C('AliPay')['appId'];
         $this->rsaPrivateKey = isset ($options ['rsaPrivateKey']) ? $options ['rsaPrivateKey'] : C('AliPay')['rsaPrivateKey'];
         $this->signType = isset ($options ['signType']) ? $options ['signType'] : C('AliPay')['signType'];
