@@ -1,0 +1,54 @@
+<!-- 框架公共头 start-->
+<extend name="Public/base"/>
+<!-- 框架公共头 end-->
+<!-- 内容 start -->
+<block name="body">
+    <div style="padding-top: 30px;padding-left: 80px">
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>地区名称：</label>
+            <div class="formControls col-8">
+                <input type="text" class="input-text" value="<{$list.name}>" maxlength="20"
+                       placeholder="请输入地区名称" id="name" name="name">
+            </div>
+            <div class="col-4"></div>
+        </div>
+        <div class="row cl">
+            <label class="form-label col-3"><span class="c-red">*</span>地区排序：</label>
+            <div class="formControls col-8">
+                <input name="sorting" id="sorting" class="input-text" maxlength="3" placeholder="请输入排序数字"
+                       onpaste="this.value=this.value.replace(/[^\d]/g,'')"
+                       onkeyup="this.value=this.value.replace(/[^\d]/g,'')" value="<{$list.sorting}>">
+            </div>
+        </div>
+        <div class="row cl" style="margin-top: 60px">
+            <div class="col-offset-4">
+                <button class="btn btn-primary radius" onclick="edit(<{$list.id}>)" value="">&nbsp;&nbsp;提交&nbsp;&nbsp;</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function edit(id) {
+            var name = $('#name').val();
+            var sorting = $('#sorting').val();
+
+            layer.confirm('确定修改吗？', function () {
+                $.post("<{:U('Region/edit')}>", {
+                    name: name,
+                    sorting: sorting,
+                    id: id
+                }, success, "json");
+                return false;
+
+                function success(data) {
+                    if (data.status) {
+                        layer.msg(data.info, {icon: 1, time: 1000});
+                    } else {
+                        layer.msg(data.info, {icon: 5, time: 1000});
+                    }
+                }
+            });
+        }
+    </script>
+
+</block>

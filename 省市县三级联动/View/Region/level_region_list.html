@@ -1,0 +1,97 @@
+<extend name="Public/base"/>
+<block name="body">
+    <div class="tw-layout">
+        <div class="tw-list-top">
+            <!--添加地区-->
+            <form class="form-horizontal" action="" method="post">
+                <div class="tw-tool-bar">
+                    <div class="input-group">
+
+                        <input type="hidden" name="level" id="level" value="<{$parent.level}>">
+                        <input type="hidden" id="parent_id" name="parent_id" value="<{$parent.parent_id}>">
+                        <input type="text" id="region_name" name="name" class="form-control"
+                               placeholder="请输入地区，多个地区用顿号(、)隔开" style="width: 300px;height: 32px">
+                        &nbsp;
+                        <a class="btn btn-primary" onclick="add_region()">添加</a>
+                        <if condition="$parent.level gt 1">
+                            <button type="button" class="btn" onclick="del_all(<{$parent.parent_id}>)">清空当前等级区域数据
+                            </button>
+                        </if>
+                    </div>
+
+                </div>
+            </form>
+
+            <form action="" method="post" id='search_form'>
+                <div class="tw-search-bar">
+                    <div class="search-form fr cf">
+
+                        <div class="sleft" style="border: 1px solid #c7c3c3;">
+                            <input type="text" name="keyword" class="search-input" value="<{$keyword}>" placeholder="输入当前等级区域名称">
+                        </div>
+                        <div class="form-group">
+                            <a onclick="ajax_get_table('search_form',1, 'Region', 'level_region_list')" class="tw-search-bar-btn">
+                                <i class="tw-icon-search"></i> 搜索
+                            </a>
+                            <button class="tw-search-clear-btn" type="button">
+                                <i class="tw-icon-minus-circle"></i> 清空
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div id="ajax_return"></div>
+    </div>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            // ajax 加载列表
+            ajax_get_table('search_form', 1, 'Region', 'level_region_list');
+        });
+
+        // 批量添加区域
+        function add_region() {
+            var region_name = $("#region_name").val();
+            var parent_id = $("#parent_id").val();
+            var level = $("#level").val();
+
+            $.ajax({
+                url: "/index.php/Admin/Region/add/name/" + region_name + "/parent_id/" + parent_id + "/level/" + level,
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1, time: 1000});
+                        document.getElementById("region_name").value = "";
+                        ajax_get_table('search_form', cur_page, 'Region', 'level_region_list');
+                    } else {
+                        layer.msg(data.info, {icon: 2, time: 1000});
+                    }
+
+                }
+            });
+            return false;
+        }
+
+        // 清空数据
+        function del_all(parent_id) {
+            if (!confirm('确定要清空吗?此步骤无法恢复！'))
+                return false;
+
+            $.ajax({
+                url: "/index.php/Admin/Region/delRegion/parent_id/" + parent_id,
+                success: function (data) {
+                    if (data.status == 1) {
+                        layer.msg(data.info, {icon: 1, time: 1000});
+                        // 使用ajax无刷新加载界面
+                        ajax_get_table('search_form', cur_page, 'Region', 'level_region_list');
+                    } else {
+                        layer.msg(data.info, {icon: 2, time: 2000});
+                    }
+
+                }
+            });
+            return false;
+        }
+
+    </script>
+</block>

@@ -1,0 +1,75 @@
+<div class="tw-list-wrap">
+    <table class="tw-table tw-table-list tw-table-fixed" id="table">
+        <thead>
+        <tr data-tabullet-map="id">
+            <th width="10%">ID</th>
+            <th data-tabullet-map="name">名称</th>
+            <th data-tabullet-map="level">排序</th>
+            <th data-tabullet-map="level">操作</th>
+        </tr>
+        </thead>
+        <tbody>
+        <notempty name="list">
+            <foreach name="list" item="v" key="k">
+                <tr>
+                    <td data-map="_index"><{$k+1}></td>
+                    <td data-map="name"><{$v.name}></td>
+                    <td data-map="sorting"><{$v.sorting}></td>
+                    <td data-type="edit">
+                        <button class="btn btn-success" onclick="edit(<{$v.id}>, '<{$v.name}>')">编辑</button>
+                        <button class="btn btn-primary" onclick="level_region(<{$v.id}>, '<{$v.name}>')">管理</button>
+                        <button class="btn btn-danger" onclick="data_del(<{$v.id}>, <{$v.parent_id}>)">删除</button>
+                    </td>
+                </tr>
+            </foreach>
+            <else/>
+            <td colspan="4" class="text-center"> aOh! 暂时还没有内容!</td>
+        </notempty>
+        </tbody>
+    </table>
+    <div><{$page}></div>
+    <input type='hidden' id='jsonData' value='<{$jsonData}>'/>
+</div>
+
+<script>
+
+    // 点击分页跳转
+    $(".pagination  a").click(function () {
+        var page = $(this).data('p');
+        ajax_get_table('search_form', page, 'Region', 'list_region');
+    });
+
+    function level_region(id, name) {
+        title = name + ' 下级区域';
+        url = "<?php echo U('Region/level_region_list', '', ''); ?>/parent_id/" + id;
+        layer_show(title, url, 1000, 0, '', '');
+    }
+
+    function edit(id, name) {
+        title = '编辑：' + name;
+        url = "<?php echo U('Region/edit', '', ''); ?>/id/" + id;
+        layer_show(title, url, 500, 300, 'Region', 'list_region');
+    }
+
+    /*删除*/
+    function data_del(id, parent_id) {
+        if (!confirm('确定要删除吗?'))
+            return false;
+
+        $.ajax({
+            url: "/index.php/Admin/Region/delRegion/id/" + id + "/parent_id/" + parent_id,
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.info, {icon: 1, time: 1000});
+                    // 使用ajax无刷新删除
+                    ajax_get_table('search_form', cur_page, 'Region', 'list_region');
+                } else {
+                    layer.msg(data.info, {icon: 2, time: 2000});
+                }
+
+            }
+        });
+        return false;
+    }
+
+</script>
