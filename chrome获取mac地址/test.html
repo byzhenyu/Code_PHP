@@ -1,0 +1,25 @@
+<html>
+<head>
+
+</head>
+<body>
+<button id='connect-button'>Connect</button>
+
+<div id='response'>
+    <input id="mac" name='mac'>
+</div>
+<script type="text/javascript">
+    
+    var editorExtensionId = "anndpjfegahmdfafpipappkgpfplamaf";
+            function sendMessage(type){
+                chrome.runtime.sendMessage(editorExtensionId, {requestType: type},
+                        function(response) {
+                        });
+            }
+                if (typeof (chrome) !== 'undefined' && chrome.runtime.sendMessage && typeof (chrome.runtime.sendMessage) == "function") {
+            sendMessage();
+        }
+
+</script>
+</body>
+</html>

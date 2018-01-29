@@ -1,0 +1,49 @@
+{
+  "name": "六牛科技PC版安全插件",
+  // Extension ID: anndpjfegahmdfafpipappkgpfplamaf
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0uZQe6kqpsQUSzlyO7eipWx26Pu1K/7LWsqZ5KrOW35wOBY65/lkOdW8ZaoOu1llXUz0VezUNpQTiLkMnoMx5Kt+aUkOTG9zXkaktj/t2XR4wZfE4rQSD9yNd4eiO0/TWCrC3pBo2xQR+vuD5W526OMi7rZWeXqvBFcmhGpgD3I7L95cNfiiz6PWvdpMAfD/PGDdtjfUHvnHiiuAKtyDvXHC8v2N1WHWkZSDUPWVCOEABgvGO1MU6Kvp0yKRvaXLi9bom8We5nm5rzslOqMp30IR1KtOXGrm4GUrX5K3wABMSVLB4CcZTHz8P2gmfSllJeZiblCgW5+3/PnQ0QQbGQIDAQAB",
+  "version": "1.0",
+  "manifest_version": 2,
+  "description": "使用本插件实现从指定PC登录系统",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "browser_action": {
+    "default_icon": "icon-19.png",
+    "default_title": "六牛科技PC版安全插件"
+  },
+  "homepage_url": "http://www.liuniukeji.com",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+    "http://*.i.com/*",
+    "http://*.f6car.com/*",
+      "http://localhost/*",
+      "http://127.0.0.1/*",
+      "http://*.liuniukeji.cn/*",
+      "http://*.liuniukeji.net/*",
+      "http://*.liuniukeji.com/*"
+    ]
+  },
+  "permissions": [
+    "nativeMessaging",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

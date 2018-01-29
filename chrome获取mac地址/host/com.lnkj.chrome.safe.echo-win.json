@@ -1,0 +1,9 @@
+{
+  "name": "com.lnkj.chrome.safe.echo",
+  "description": "六牛科技PC版安全插件HOST",
+  "path": "lnkjSafe.exe",
+  "type": "stdio",
+  "allowed_origins": [
+    "chrome-extension://anndpjfegahmdfafpipappkgpfplamaf/"
+  ]
+}
