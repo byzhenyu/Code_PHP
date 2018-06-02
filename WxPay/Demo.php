@@ -89,11 +89,16 @@ class Demo {
         $flag = $wxPay->WxPayRefundNotify();
         if ($flag['status']) {
             $out_trade_no = $flag['data']['out_trade_no'];//订单号
-            //业务逻辑处理
-            $result = D('Common/Recharge')->notify($out_trade_no);
-            if ($result) {
-                $r_arr['return_code'] = 'SUCCESS';
-                $r_arr['return_msg'] = '回调成功';
+            if($flag['data']['refund_status']=='SUCCESS'){
+                //退款成功业务处理
+                $r_arr['return_code'] = 'FAIL';
+                $r_arr['return_msg'] = '回调失败';
+                echo $this->arrayToXml($r_arr);
+                die;
+            }else{
+                //退款失败业务处理
+                $r_arr['return_code'] = 'FAIL';
+                $r_arr['return_msg'] = '回调失败';
                 echo $this->arrayToXml($r_arr);
                 die;
             }

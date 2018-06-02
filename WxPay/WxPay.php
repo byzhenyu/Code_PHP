@@ -227,7 +227,8 @@ class WxPay {
 
         $reqObj =simplexml_load_string($decrypted, 'SimpleXMLElement', LIBXML_NOCDATA);
         $reqObj = (array)$reqObj;
-        if($reqObj['refund_status'] == 'SUCCESS'){
+        //商户订单号存在说明解密成功
+        if($reqObj['out_trade_no']){
             return array('status' => true, 'data' => $reqObj);
         } else
             return array('status' => false);
