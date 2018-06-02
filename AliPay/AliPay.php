@@ -225,4 +225,45 @@ class AliPay {
             return false;
         }
     }
+
+    /**
+     * 支付宝订单退款
+     * @param string $data 业务参数
+     * @param $data['out_trade_no'] 订单号  必填
+     * @param $data['refund_amount'] 退款金额 必填
+     * @return bool
+     */
+    public function AliPayRefund($data) {
+        if (empty($this->appId))
+            return false;
+        $aliPayPath = './Plugins/AliPay/alipay-sdk/';
+        require_once($aliPayPath . "aop/AopClient.php");
+        require_once($aliPayPath . 'aop/request/AlipayTradeRefundRequest.php');
+        $aop = new \AopClient;
+        $aop->gatewayUrl = "https://openapi.alipay.com/gateway.do";
+        $aop->appId = $this->appId;
+        $aop->rsaPrivateKey = $this->rsaPrivateKey;
+        $aop->format = "json";
+        $aop->charset = "UTF-8";
+        $aop->signType = $this->signType;
+        $aop->alipayrsaPublicKey = $this->alipayrsaPublicKey;
+        //实例化具体API对应的request类,类名称和接口名称对应,当前调用接口名称：alipay.trade.app.pay
+        $request = new \AlipayTradeRefundRequest();
+        //SDK已经封装掉了公共参数，这里只需要传入业务参数
+        $bizcontent = json_encode([
+            'out_trade_no' => $data['out_trade_no'],//此订单号为商户唯一订单号
+            'refund_amount' => $data['refund_amount'],
+        ]);
+        $request->setBizContent($bizcontent);
+        $result = $aop->execute($request);
+        $responseNode = str_replace(".", "_", $request->getApiMethodName()) . "_response";
+        $resultCode = $result->$responseNode->code;
+        if(!empty($resultCode)&&$resultCode == 10000){
+            //echo "成功"; 提现成功
+            return true;
+        } else {
+            //echo "失败";
+            return false;
+        }
+    }
 }

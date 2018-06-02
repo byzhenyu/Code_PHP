@@ -22,11 +22,11 @@ class WxPay {
 
     /**
      * 微信支付App
-     * @param string $data 业务参数 body out_trade_no total_fee
-     * @param string $data ['out_trade_no'] 订单号  必填
-     * @param string $data ['total_fee'] 订单金额  必填
-     * @param string $data ['body'] 订单详情  必填
-     * @return $response 返回app所需字符串
+     * @param $d 业务参数 body out_trade_no total_fee
+     * @param $d ['out_trade_no'] 订单号  必填
+     * @param $d ['total_fee'] 订单金额  必填
+     * @param $d ['body'] 订单详情  必填
+     * @return array 返回app所需字符串
      */
     public function WxPayApp($d) {
         $wxConfig = $this->config;
@@ -61,11 +61,11 @@ class WxPay {
     }
 
     /**
-     * 支付宝web支付 需要签约 电脑网站支付
-     * @param string $data 业务参数
-     * @param string $data ['out_trade_no'] 订单号  必填
-     * @param string $data ['total_fee'] 订单金额  必填
-     * @param string $data ['body'] 订单详情  必填
+     * 微信web支付 电脑网站显示二维码，手机微信扫描支付
+     * @param  $d 业务参数
+     * @param  $d ['out_trade_no'] 订单号  必填
+     * @param  $d ['total_fee'] 订单金额  必填
+     * @param  $d ['body'] 订单详情  必填
      * @return string 支付二维码图片地址
      */
     public function WxPayWeb($d) {
@@ -101,13 +101,51 @@ class WxPay {
     }
 
     /**
+     * 微信H5支付 手机网站调起微信支付
+     * @param  $d 业务参数
+     * @param  $d ['out_trade_no'] 订单号  必填
+     * @param  $d ['total_fee'] 订单金额  必填
+     * @param  $d ['body'] 订单详情  必填
+     * @return $d 支付二维码图片地址
+     */
+    public function WxPayH5($d) {
+        $wxConfig = $this->config;
+        $out_trade_no = $d['out_trade_no'];
+        $total_fee = abs(floatval($d['total_fee'])) * 100;// 微信支付 单位为分
+        $nonce_str = $this->getRandChar(32);
+        $ip = $this->get_client_ip();
+        if ($ip == '::1')
+            $ip = '1.1.1.1';
+        $data ["appid"] = $wxConfig["app_id"];
+        $data ["body"] = $d['body'];
+        $data ["mch_id"] = $wxConfig['mch_id'];
+        $data ["nonce_str"] = $nonce_str;
+        $data ["notify_url"] = $wxConfig["notify_url"];
+        $data ["out_trade_no"] = $out_trade_no;
+        $data ["spbill_create_ip"] = $ip;
+        $data ["total_fee"] = $total_fee;
+        $data ["trade_type"] = "MWEB";
+        $s = $this->getSign($data);
+        $data ["sign"] = $s;
+        $xml = $this->arrayToXml($data);
+        $url = 'https://api.mch.weixin.qq.com/pay/unifiedorder';
+        $response = $this->postXmlCurl($xml, $url);
+        $re = $this->xmlstr_to_array($response);
+        if( $re['return_code'] == 'SUCCESS' && $re['result_code'] == 'SUCCESS' ){
+            //判断调用成功跳转中介页面
+            return $re['mweb_url'];
+        }
+        return '';
+    }
+
+    /**
      * 微信签名验证
      * @param string $data 业务参数
      * @return array
      */
     public function WxPayNotifyCheck() {
         $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
-		if(!$postStr){
+        if (!$postStr) {
             $postStr = file_get_contents("php://input");
         }
         $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
@@ -126,6 +164,74 @@ class WxPay {
             return array('status' => false);
     }
 
+    /**
+     * 微信App支付退款申请
+     * @param array $d 业务参数 body out_trade_no total_fee
+     * @param array $d ['out_trade_no'] 订单号  必填
+     * @param array $d ['total_fee'] 订单金额  必填
+     * @return array 返回app所需字符串
+     */
+    public function WxPayRefund($d) {
+        $wxConfig = $this->config;
+        $out_trade_no = $d['out_trade_no'];
+        $transaction_id = $d['trade_no'];
+        $total_fee = $d['total_amount'];// 微信支付 单位为分
+        $refund_reason = $d['refund_reason'];
+        $nonce_str = $this->getRandChar(32);
+        $data ["appid"] = $wxConfig["app_id"];
+        $data ["mch_id"] = $wxConfig['mch_id'];
+        $data ["nonce_str"] = $nonce_str;
+        $data ["notify_url"] = $wxConfig["refund_notify"];
+        $data ["out_trade_no"] = $out_trade_no;
+        $data ["transaction_id"] = $transaction_id;
+        $data ["out_refund_no"] = $out_trade_no;
+        $data ["total_fee"] = $total_fee;
+        $data ["refund_fee"] = $total_fee;
+        $data ['refund_desc'] = $refund_reason;
+        $s = $this->getSign($data);
+        $data ["sign"] = $s;
+        $xml = $this->arrayToXml($data);
+        $url = 'https://api.mch.weixin.qq.com/secapi/pay/refund';
+        $response = $this->postXmlCurl($xml, $url);
+        $re = $this->xmlstr_to_array($response);
+        if ($re ['return_code'] == 'FAIL') {
+            return $re['return_msg'];
+        }
+        return $re;
+    }
+
+    /**
+     * 微信退款通知
+     * @return array 验证正确返回状态及订单数据
+     */
+    public function WxPayRefundNotify() {
+        $postStr = $GLOBALS['HTTP_RAW_POST_DATA'];
+        if (!$postStr) {
+            $postStr = file_get_contents("php://input");
+        }
+        $postObj = simplexml_load_string($postStr, 'SimpleXMLElement', LIBXML_NOCDATA);
+        if ($postObj === false) {
+            error_log('parse xml error', 3, './wechat_errorlog.txt');
+        }
+        if ($postObj->return_code != 'SUCCESS') {
+            error_log($postObj->return_msg, 3, './wechat_errorlog.txt');
+        }
+        $arr = (array)$postObj;
+
+        $wxConfig = $this->config;
+        //解密信息
+        require_once("Plugins/WxPay/OpenSSLAES.php");
+        $aes = new \OpenSSLAES(md5($wxConfig['key']));
+
+        $decrypted = $aes->decrypt($arr['req_info']);
+
+        $reqObj =simplexml_load_string($decrypted, 'SimpleXMLElement', LIBXML_NOCDATA);
+        $reqObj = (array)$reqObj;
+        if($reqObj['refund_status'] == 'SUCCESS'){
+            return array('status' => true, 'data' => $reqObj);
+        } else
+            return array('status' => false);
+    }
 
     /**
      * 以下为微信所需相关方法，请勿修改

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * 微信插件Demo
  * @author Jack_YanTC <627495692@qq.com>
@@ -8,35 +9,19 @@ class Demo {
     //config 示例
     public $config = array(
 
-                   /* 支付宝支付相关配置 */
-    'AliPay' => array(
-        /*应用ID，在支付宝上获取*/
-        'appId' => '20170920088...',
-        /*签名方式*/
-        'signType' => 'RSA2',
-        /*应用密钥，与应用公钥一组，公钥填写到支付宝上*/
-        'rsaPrivateKey' => 'MIIEvgIBADANB...',
-        /*支付宝公钥，在支付宝上获取*/
-        'alipayrsaPublicKey' => 'MIIBIjAN...',
-        /*支付宝回调地址*/
-        'notifyUrl' => __HOST_URL__.'/index.php/Api/Public/alipayNotify',
-        /*用于web支付返回地址*/
-        'returnUrl' => __HOST_URL__.'/index.php/Api/Public/alipayNotify',
-    ),
-
-    /* 微信支付相关配置 快帮http://kuaibang.host3.liuniukeji.com*/
-    'WxPay' => array(
-        #微信商户平台应用APPID
-        'app_id' => 'wx4c06328b7065...',
-        #商户号
-        'mch_id' => '1488544...',
-        //api密钥
-        'key' => 'kuaibdxxxxx....',
-        #异步回调地址
-        'notify_url' => __HOST_URL__.'/index.php/Api/Public/wxNotify',
-        //公众帐号secert（仅JSAPI支付的时候需要配置)
-        'appsecret' => '57a098.....',
-    ),
+        /* 微信支付相关配置 */
+        'WxPay' => array(
+            #微信商户平台应用APPID
+            'app_id' => 'wx278f0cfe8cf5be1c',
+            #商户号
+            'mch_id' => '1482937212',
+            //api密钥
+            'key' => 'yiwenjiaoyuyiwenjiaoyuyiwenjiaoy',
+            #异步回调地址
+            'notify_url' => 'http://yiwen.host3.liuniukeji.com/index.php/Home/Payment/wechatNotify',
+            //公众帐号secert（仅JSAPI支付的时候需要配置)
+            'appsecret' => 'e2970084a53543160d8e93a865d94621',
+        )
 
     );
 
@@ -94,6 +79,41 @@ class Demo {
         $r_arr['return_msg'] = '回调失败';
         echo $this->arrayToXml($r_arr);
         die;
+    }
 
+    //微信退款回调地址 示例
+    public function WxRefundNotify() {
+        require_once("Plugins/WxPay/WxPay.php");
+        $wxPay = new \WxPay();
+        //验证是否是微信发送且数据完整
+        $flag = $wxPay->WxPayRefundNotify();
+        if ($flag['status']) {
+            $out_trade_no = $flag['data']['out_trade_no'];//订单号
+            //业务逻辑处理
+            $result = D('Common/Recharge')->notify($out_trade_no);
+            if ($result) {
+                $r_arr['return_code'] = 'SUCCESS';
+                $r_arr['return_msg'] = '回调成功';
+                echo $this->arrayToXml($r_arr);
+                die;
+            }
+        }
+        $r_arr['return_code'] = 'FAIL';
+        $r_arr['return_msg'] = '回调失败';
+        echo $this->arrayToXml($r_arr);
+        die;
+    }
+
+    public function test() {
+        require_once("Plugins/WxPay/OpenSSLAES.php");
+        $aes = new \OpenSSLAES('12345678');
+
+        $encrypted = $aes->encrypt('凭栏知潇雨');
+
+        echo '要加密的字符串：凭栏知潇雨<br>加密后的字符串：', $encrypted, '<hr>';
+
+        $decrypted = $aes->decrypt($encrypted);
+
+        echo '要解密的字符串：', $encrypted, '<br>解密后的字符串：', $decrypted;
     }
 }

@@ -9,35 +9,19 @@ class Demo {
     //config 示例
     public $config = array(
 
-           /* 支付宝支付相关配置 */
-    'AliPay' => array(
-        /*应用ID，在支付宝上获取*/
-        'appId' => '20170920088...',
-        /*签名方式*/
-        'signType' => 'RSA2',
-        /*应用密钥，与应用公钥一组，公钥填写到支付宝上*/
-        'rsaPrivateKey' => 'MIIEvgIBADANB...',
-        /*支付宝公钥，在支付宝上获取*/
-        'alipayrsaPublicKey' => 'MIIBIjAN...',
-        /*支付宝回调地址*/
-        'notifyUrl' => __HOST_URL__.'/index.php/Api/Public/alipayNotify',
-        /*用于web支付返回地址*/
-        'returnUrl' => __HOST_URL__.'/index.php/Api/Public/alipayNotify',
-    ),
-
-    /* 微信支付相关配置 快帮http://kuaibang.host3.liuniukeji.com*/
-    'WxPay' => array(
-        #微信商户平台应用APPID
-        'app_id' => 'wx4c06328b7065...',
-        #商户号
-        'mch_id' => '1488544...',
-        //api密钥
-        'key' => 'kuaibdxxxxx....',
-        #异步回调地址
-        'notify_url' => __HOST_URL__.'/index.php/Api/Public/wxNotify',
-        //公众帐号secert（仅JSAPI支付的时候需要配置)
-        'appsecret' => '57a098.....',
-    ),
+        /* 微信支付相关配置 */
+        'WxPay' => array(
+            #微信商户平台应用APPID
+            'app_id' => 'wx278f0cfe8cf5be1c',
+            #商户号
+            'mch_id' => '1482937212',
+            //api密钥
+            'key' => 'yiwenjiaoyuyiwenjiaoyuyiwenjiaoy',
+            #异步回调地址
+            'notify_url' => 'http://yiwen.host3.liuniukeji.com/index.php/Home/Payment/wechatNotify',
+            //公众帐号secert（仅JSAPI支付的时候需要配置)
+            'appsecret'=>'e2970084a53543160d8e93a865d94621',
+        ),
 
     );
 
@@ -129,7 +113,7 @@ class Demo {
         die;
     }
 
-    //提现转账 示例 
+    //提现转账 示例
     public function withdraw() {
         $data['out_biz_no']='201705201314';//订单号
         $data['payee_account'] ='627495692@qq.com';//收款支付宝账号
