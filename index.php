@@ -3,14 +3,13 @@
 //判断是否含有SQL注入并跳出
 function sqlInj($value) {
     if (is_string($value)) {
-        //过滤参数
-        $arr = explode('|', 'UPDATEXML|UPDATE|WHERE|EXEC|INSERT|SELECT|DELETE|COUNT|CHR|MID|MASTER|TRUNCATE|DECLARE|BIND|DROP|CREATE| EXP |EXP%| OR |XOR| LIKE |NOTLIKE|NOT BETWEEN|NOTBETWEEN|BETWEEN|NOTIN|NOT IN|CONTACT|EXTRACTVALUE|LOAD_FILE|INFORMATION_SCHEMA|outfile|%20|into|union');
+        $arr =array('UPDATEXML','UPDATE','WHERE','EXEC','INSERT','SELECT','DELETE','COUNT','CHR','MID','MASTER','TRUNCATE','DECLARE','BIND','DROP'
+        ,'CREATE',' EXP ','EXP%',' OR ','XOR',' LIKE ','NOTLIKE','NOT BETWEEN','NOTBETWEEN','BETWEEN','NOTIN','NOT IN','CONTACT','EXTRACTVALUE'
+        ,'LOAD_FILE','INFORMATION_SCHEMA','INFORMATION_SCHEMA','outfile','%20','into','union');
         foreach ($arr as $a) {
-            //判断参数值中是否含有SQL关键字，如果有则跳出
             if (stripos($value, $a) !== false) exit(json_encode(array('status' => -1, 'info' => '参数错误，含有敏感字符' . $a, 'data' => array($a)), 0));
         }
     } elseif (is_array($value)) {
-        //如果参数值是数组则递归遍历判断
         foreach ($value as $v) {
             sqlInj($v);
         }
