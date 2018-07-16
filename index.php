@@ -1,11 +1,10 @@
 <?php
 //防止SQL注入代码，请将该文件中前两段代码添加到自己项目index.php的最前面即可
-/////*****防止SQL注入代码 begin*****/////
-//判断是否含有注入并跳出
+//判断是否含有SQL注入并跳出
 function sqlInj($value) {
-    //过滤参数
-    $arr = explode('|', 'UPDATEXML|UPDATE|WHERE|EXEC|INSERT|SELECT|DELETE|COUNT|CHR|MID|MASTER|TRUNCATE|DECLARE|BIND|DROP|CREATE| EXP |EXP%| OR |XOR| LIKE |NOTLIKE|NOT BETWEEN|NOTBETWEEN|BETWEEN|NOTIN|NOT IN|CONTACT|EXTRACTVALUE|LOAD_FILE|INFORMATION_SCHEMA|outfile|%20|into|union');
     if (is_string($value)) {
+        //过滤参数
+        $arr = explode('|', 'UPDATEXML|UPDATE|WHERE|EXEC|INSERT|SELECT|DELETE|COUNT|CHR|MID|MASTER|TRUNCATE|DECLARE|BIND|DROP|CREATE| EXP |EXP%| OR |XOR| LIKE |NOTLIKE|NOT BETWEEN|NOTBETWEEN|BETWEEN|NOTIN|NOT IN|CONTACT|EXTRACTVALUE|LOAD_FILE|INFORMATION_SCHEMA|outfile|%20|into|union');
         foreach ($arr as $a) {
             //判断参数值中是否含有SQL关键字，如果有则跳出
             if (stripos($value, $a) !== false) exit(json_encode(array('status' => -1, 'info' => '参数错误，含有敏感字符' . $a, 'data' => array($a)), 0));
@@ -18,11 +17,9 @@ function sqlInj($value) {
     }
 }
 
-//过滤请求参数
-foreach ($_REQUEST as $key => $value) {
-    sqlInj($value);
-}
-/////*****防止SQL注入代码 end*****/////
+//执行防止SQL注入代码
+sqlInj($_REQUEST);
+
 
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
 
