@@ -1,0 +1,5 @@
+1、Aes.class.php 存放位置：\Application\Common\Tools
+
+2、KEY，IV 使用MD5加密串，不同项目最好更换
+
+3、金额加密方式最好，每个项目不同规则，中间连接的特殊字符更换。
