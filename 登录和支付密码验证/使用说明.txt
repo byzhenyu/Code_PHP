@@ -1,0 +1,10 @@
+1、function.php 内文件复制到Common/function.php下，或各模块对应的公共函数下
+
+2、需要验证登录密码的地方引用checkLoginPassword()方法
+   返回值-1代表位数不足8位
+   返回值1代表密码复杂级别为低
+   返回值2代表密码复杂级别为中
+   返回值3代表密码复杂级别为高
+
+2、需要验证支付密码的地方引用checkPayPassword()方法
+   
