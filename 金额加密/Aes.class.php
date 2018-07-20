@@ -90,5 +90,13 @@ class Aes{
         $base = (mcrypt_encrypt(MCRYPT_RIJNDAEL_128, $key,$this->addPkcs7Padding($str,16) , MCRYPT_MODE_CBC, $iv));
         return $this->strToHex($base);
     }
+    //php7.0以上使用
+    public function encrypt_openssl($str,$iv=self::IV,$key=self::KEY) {
+        return openssl_encrypt($str, 'AES-128-CBC',$key,0,$iv);
+    }
+    //php7.0以上使用
+    public function decrypt_openssl($str,$iv=self::IV,$key=self::KEY) {
+        return openssl_decrypt(base64_decode($str), 'AES-128-CBC', $key, OPENSSL_RAW_DATA, $iv);
+    }
 }
 
