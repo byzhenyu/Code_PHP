@@ -1,5 +1,7 @@
-1��Aes.class.php ���λ�ã�\Application\Common\Tools
+1、Aes.class.php 存放位置：\Application\Common\Tools
 
-2��KEY��IV ʹ��MD5���ܴ�����ͬ��Ŀ��ø���
+2、KEY，IV 使用MD5加密串，不同项目最好更换
 
-3�������ܷ�ʽ��ã�ÿ����Ŀ��ͬ�����м����ӵ������ַ�������
+3、金额加密方式最好，每个项目不同规则，中间连接的特殊字符更换。
+
+4、以上只兼容php7.0 以下。如需7.0以及以上版本加密，已封装到Aes.class.php.
