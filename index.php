@@ -16,8 +16,9 @@ function sqlInj($value) {
     }
 }
 
-//执行防止SQL注入代码
-sqlInj($_REQUEST);
+//防止微信支付宝回调被屏蔽
+if (stripos($_SERVER['PHP_SELF'], 'wxNotify') === false && stripos($_SERVER['PHP_SELF'], 'alipayNotify') === false)
+    sqlInj($_REQUEST);//不是回调方法时执行防止SQL注入代码
 
 
 if(version_compare(PHP_VERSION,'5.3.0','<'))  die('require PHP > 5.3.0 !');
